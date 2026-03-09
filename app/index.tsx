@@ -1,6 +1,9 @@
-import { Text, View } from "react-native";
+import { useRouter } from "expo-router";
+import { Button, Text, View } from "react-native";
 
 export default function Index() {
+  const router = useRouter(); // Inicializa o roteador
+
   return (
     <View
       style={{
@@ -9,7 +12,13 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
+      <Text>Tela de Onboarding (index.tsx)</Text>
+
+      {/* Botão provisório para testar a navegação */}
+      <Button
+        title="Ir para o Login"
+        onPress={() => router.push("/login")}
+      />
     </View>
   );
 }
