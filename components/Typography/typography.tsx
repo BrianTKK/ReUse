@@ -1,74 +1,75 @@
 import React from 'react';
 import { StyleSheet, Text, TextProps } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
 import { colors } from '../../constants/theme';
 
 const styles = StyleSheet.create({
     h1: {
-        fontSize: 30,
-        lineHeight: 37.5,
+        fontSize: RFValue(30),
+        lineHeight: RFValue(37.5),
         fontWeight: '700',
         fontFamily: 'PlusJakartaSans_700Bold',
     },
     h2: {
-        fontSize: 24,
-        lineHeight: 32,
+        fontSize: RFValue(24),
+        lineHeight: RFValue(32),
         fontWeight: '600',
         fontFamily: 'PlusJakartaSans_600SemiBold',
     },
     h3: {
-        fontSize: 20,
-        lineHeight: 28,
+        fontSize: RFValue(20),
+        lineHeight: RFValue(28),
         fontWeight: '600',
         fontFamily: 'PlusJakartaSans_600SemiBold',
     },
     h4: {
-        fontSize: 18,
-        lineHeight: 26,
+        fontSize: RFValue(18),
+        lineHeight: RFValue(26),
         fontWeight: '500',
         fontFamily: 'PlusJakartaSans_500Medium',
     },
     h5: {
-        fontSize: 16,
-        lineHeight: 24,
+        fontSize: RFValue(16),
+        lineHeight: RFValue(24),
         fontWeight: '500',
         fontFamily: 'PlusJakartaSans_500Medium',
     },
     h6: {
-        fontSize: 14,
-        lineHeight: 20,
+        fontSize: RFValue(14),
+        lineHeight: RFValue(20),
         fontWeight: '500',
         fontFamily: 'PlusJakartaSans_500Medium',
         textTransform: 'uppercase',
     },
     body: {
-        fontSize: 18,
-        lineHeight: 29.3,
+        fontSize: RFValue(18),
+        lineHeight: RFValue(29.3),
         fontWeight: '400',
         fontFamily: 'PlusJakartaSans_400Regular',
     },
     body2: {
-        fontSize: 16,
-        lineHeight: 28,
+        fontSize: RFValue(16),
+        lineHeight: RFValue(28),
         fontWeight: '400',
         fontFamily: 'PlusJakartaSans_400Regular',
         //Para descrições
     },
     body3: {
-        fontSize: 12,
-        lineHeight: 16,
+        fontSize: RFValue(12),
+        lineHeight: RFValue(16),
         fontWeight: '400',
         fontFamily: 'PlusJakartaSans_400Regular',
         //Dicas de formulario e afins
     },
     button: {
-        fontSize: 16,
-        lineHeight: 24,
-        fontWeight: '600',
-        fontFamily: 'PlusJakartaSans_600SemiBold',
+        fontSize: RFValue(16),
+        lineHeight: RFValue(24),
+        fontWeight: '700',
+        fontFamily: 'PlusJakartaSans_700Bold',
     },
     caption: {
-        fontSize: 12,
-        lineHeight: 16,
+        fontSize: RFValue(12),
+        lineHeight: RFValue(16),
         fontWeight: '400',
         fontFamily: 'PlusJakartaSans_400Regular',
     },

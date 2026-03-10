@@ -5,4 +5,5 @@ export const colors = {
     greenDark: '#1A4632',      // Color 2 Dark
     textDark: '#1B281F',       // Text Dark
     white: '#FFFFFF',          // Branco global
+    background: '#F3FAED',
 };

@@ -1,29 +1,51 @@
 import { useRouter } from "expo-router";
-import { View } from "react-native";
-import LogoReUse from "../assets/images/ReUse_SVG.svg";
-import PrimaryButton from "../components/Buttons/PrimaryButton";
-import * as Typography from '../components/Typography/typography';
+import { View, Text } from "react-native";
+import { SafeAreaView } from 'react-native-safe-area-context';
+import LogoReUseSVG from "../assets/images/ReUse_SVG.svg";
+import LogoReUseText from "../assets/images/ReUse.svg"; 
+
+import OnboardingCarousel from "../components/Carousel/OnboardingCarousel";
+import { colors } from "../constants/theme";
 
 export default function Index() {
   const router = useRouter();
 
   return (
-    <View
+    <SafeAreaView
       style={{
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
+        backgroundColor: colors.background, 
       }}
     >
-      {/* 2. Use o Logo como se fosse um botão ou texto, definindo largura e altura */}
-      <LogoReUse width={150} height={50} />
+      {/* HEADER EXATO DO PROTÓTIPO */}
+      <View style={{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop: 20, 
+        paddingHorizontal: 24,
+      }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}> 
+            <LogoReUseSVG width={25} height={24} />
+            <LogoReUseText width={66.2} height={22.5} />
+        </View>
+        
+        <Text 
+            style={{ 
+                fontFamily: 'PlusJakartaSans_600SemiBold',
+                fontSize: 14,
+                lineHeight: 20,
+                color: colors.textDark
+             }}
+            onPress={() => router.push("/login")}
+        >
+            Pular
+        </Text>
+      </View>
 
-      <Typography.H1> Tem algo parado em casa?</Typography.H1>
+      {/* COMPONENTE DO CARROSEL QUE ENCAPSULA AS FOLHAS E OS BOTÕES */}
+      <OnboardingCarousel />
 
-      <PrimaryButton
-        title="Ir para o Login"
-        onPress={() => router.push("/login")}
-      />
-    </View>
+    </SafeAreaView>
   );
 }
