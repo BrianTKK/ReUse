@@ -1,8 +1,11 @@
 import { useRouter } from "expo-router";
-import { Button, Text, View } from "react-native";
+import { View } from "react-native";
+import LogoReUse from "../assets/images/ReUse_SVG.svg";
+import PrimaryButton from "../components/Buttons/PrimaryButton";
+import * as Typography from '../components/Typography/typography';
 
 export default function Index() {
-  const router = useRouter(); // Inicializa o roteador
+  const router = useRouter();
 
   return (
     <View
@@ -12,10 +15,12 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Text>Tela princiapl (index.tsx)</Text>
+      {/* 2. Use o Logo como se fosse um botão ou texto, definindo largura e altura */}
+      <LogoReUse width={150} height={50} />
 
-      {/* Botão provisório para testar a navegação */}
-      <Button
+      <Typography.H1> Tem algo parado em casa?</Typography.H1>
+
+      <PrimaryButton
         title="Ir para o Login"
         onPress={() => router.push("/login")}
       />

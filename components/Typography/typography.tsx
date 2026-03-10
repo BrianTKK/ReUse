@@ -1,4 +1,6 @@
-import { StyleSheet } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, TextProps } from 'react-native';
+import { colors } from '../../constants/theme';
 
 const styles = StyleSheet.create({
     h1: {
@@ -56,6 +58,7 @@ const styles = StyleSheet.create({
         lineHeight: 16,
         fontWeight: '400',
         fontFamily: 'PlusJakartaSans_400Regular',
+        //Dicas de formulario e afins
     },
     button: {
         fontSize: 16,
@@ -69,4 +72,96 @@ const styles = StyleSheet.create({
         fontWeight: '400',
         fontFamily: 'PlusJakartaSans_400Regular',
     },
-})
+});
+
+interface TypographyProps extends TextProps {
+    children: React.ReactNode;
+}
+
+export const H1 = ({ children, style, ...props }: TypographyProps) => {
+    return (
+        <Text style={[styles.h1, { color: colors.textDark }, style]} {...props}>
+            {children}
+        </Text>
+    );
+};
+
+export const H2 = ({ children, style, ...props }: TypographyProps) => {
+    return (
+        <Text style={[styles.h2, { color: colors.textDark }, style]} {...props}>
+            {children}
+        </Text>
+    );
+};
+
+export const H3 = ({ children, style, ...props }: TypographyProps) => {
+    return (
+        <Text style={[styles.h3, { color: colors.textDark }, style]} {...props}>
+            {children}
+        </Text>
+    );
+};
+
+export const H4 = ({ children, style, ...props }: TypographyProps) => {
+    return (
+        <Text style={[styles.h4, { color: colors.textDark }, style]} {...props}>
+            {children}
+        </Text>
+    );
+};
+
+export const H5 = ({ children, style, ...props }: TypographyProps) => {
+    return (
+        <Text style={[styles.h5, { color: colors.textDark }, style]} {...props}>
+            {children}
+        </Text>
+    );
+};
+
+export const H6 = ({ children, style, ...props }: TypographyProps) => {
+    return (
+        <Text style={[styles.h6, { color: colors.textDark }, style]} {...props}>
+            {children}
+        </Text>
+    );
+};
+
+export const Body = ({ children, style, ...props }: TypographyProps) => {
+    return (
+        <Text style={[styles.body, { color: colors.textDark }, style]} {...props}>
+            {children}
+        </Text>
+    );
+};
+
+export const Body2 = ({ children, style, ...props }: TypographyProps) => {
+    return (
+        <Text style={[styles.body2, { color: colors.textDark }, style]} {...props}>
+            {children}
+        </Text>
+    );
+};
+
+export const Body3 = ({ children, style, ...props }: TypographyProps) => {
+    return (
+        <Text style={[styles.body3, { color: colors.textDark }, style]} {...props}>
+            {children}
+        </Text>
+    );
+};
+
+export const ButtonText = ({ children, style, ...props }: TypographyProps) => {
+    return (
+        <Text style={[styles.button, { color: colors.textDark }, style]} {...props}>
+            {children}
+        </Text>
+    );
+};
+
+export const Caption = ({ children, style, ...props }: TypographyProps) => {
+    return (
+        <Text style={[styles.caption, { color: colors.textDark }, style]} {...props}>
+            {children}
+        </Text>
+    );
+};
