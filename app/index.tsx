@@ -12,7 +12,7 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Text>Tela de Onboarding (index.tsx)</Text>
+      <Text>Tela inicial (index.tsx)</Text>
 
       {/* Botão provisório para testar a navegação */}
       <Button
