@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, TextProps } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { colors } from '../../constants/theme';
+import { colors } from '../../../constants/theme';
 
 const styles = StyleSheet.create({
     h1: {

@@ -2,7 +2,7 @@ import { useRouter } from "expo-router";
 import React, { useRef, useState } from 'react';
 import { Animated, FlatList, Image, Text, useWindowDimensions, View } from "react-native";
 
-import { colors } from "../../constants/theme";
+import { colors } from "../../../constants/theme";
 import PrimaryButton from "../Buttons/PrimaryButton";
 import * as Typography from '../Typography/typography';
 

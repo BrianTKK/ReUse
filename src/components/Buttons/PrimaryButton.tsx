@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, TouchableOpacityProps, ViewStyle } from 'react-native';
 // 1. Importaremos as cores que criamos
-import { colors } from '../../constants/theme';
+import { colors } from '../../../constants/theme';
 // 2. Importamos o componente de texto de botão que criamos
 import * as Typography from '../Typography/typography';
 

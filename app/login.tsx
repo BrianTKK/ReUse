@@ -3,12 +3,13 @@ import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { saveUserSession } from '../src/services/authService';
 
 // Components
-import PrimaryButton from '../components/Buttons/PrimaryButton';
-import SecondaryButton from '../components/Buttons/SecondaryButton';
-import CustomTextInput from '../components/Inputs/CustomTextInput';
-import * as Typography from '../components/Typography/typography';
+import PrimaryButton from '../src/components/Buttons/PrimaryButton';
+import SecondaryButton from '../src/components/Buttons/SecondaryButton';
+import CustomTextInput from '../src/components/Inputs/CustomTextInput';
+import * as Typography from '../src/components/Typography/typography';
 import { colors } from '../constants/theme';
 
 // Icons/SVGs
@@ -29,6 +30,7 @@ export default function LoginScreen() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [passwordError, setPasswordError] = useState('');
+    const [email, setEmail] = useState('');
 
     const validatePassword = (text: string) => {
         setPassword(text);
@@ -47,7 +49,7 @@ export default function LoginScreen() {
         }
     };
 
-    const handleAction = () => {
+    const handleAction = async () => {
         if (activeTab === 'Cadastrar') {
             if (passwordError) return;
             if (password !== confirmPassword) {
@@ -55,7 +57,15 @@ export default function LoginScreen() {
                 return;
             }
         }
+
+        if (email) {
+        await saveUserSession(email);
+        console.log("Sessão salva para:", email);
+        }
+        
         console.log("Submit via " + activeTab);
+
+        router.push('/home');
     };
 
     return (

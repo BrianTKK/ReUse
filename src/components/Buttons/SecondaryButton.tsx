@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, TouchableOpacityProps, ViewStyle } from 'react-native';
-import { colors } from '../../constants/theme';
+import { colors } from '../../../constants/theme';
 import * as Typography from '../Typography/typography';
 
 interface SecondaryButtonProps extends TouchableOpacityProps {

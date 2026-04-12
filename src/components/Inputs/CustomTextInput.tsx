@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, TextInput, StyleSheet, TextInputProps, TouchableOpacity } from 'react-native';
-import { colors } from '../../constants/theme';
+import { colors } from '../../../constants/theme';
 import * as Typography from '../Typography/typography';
 
 interface CustomTextInputProps extends TextInputProps {
