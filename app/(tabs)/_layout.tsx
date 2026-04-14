@@ -4,10 +4,10 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { AntDesign, Ionicons, Feather } from '@expo/vector-icons';
 import { colors } from '../../constants/theme';
 
-import HomeIcon from '../../src/assets/icons/home.svg';
-import SearchIcon from '../../src/assets/icons/search.svg';
-import ChatIcon from '../../src/assets/icons/chat.svg';
-import ProfileIcon from '../../src/assets/icons/profile.svg';
+import HomeIcon from '../../src/assets/imagens/icons/home.svg';
+import SearchIcon from '../../src/assets/imagens/icons/search.svg';
+import ChatIcon from '../../src/assets/imagens/icons/chat.svg';
+import ProfileIcon from '../../src/imagens/assets/icons/profile.svg';
 
 export default function TabLayout() {
   return (
