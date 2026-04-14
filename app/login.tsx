@@ -5,19 +5,17 @@ import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { saveUserSession } from '../src/services/authService';
 
-// Components
 import PrimaryButton from '../src/components/Buttons/PrimaryButton';
 import SecondaryButton from '../src/components/Buttons/SecondaryButton';
 import CustomTextInput from '../src/components/Inputs/CustomTextInput';
 import * as Typography from '../src/components/Typography/typography';
 import { colors } from '../constants/theme';
 
-// Icons/SVGs
-import EmailIcon from '../assets/images/icons/email.svg';
-import EyeIcon from '../assets/images/icons/eye.svg';
-import LockIcon from '../assets/images/icons/lock.svg';
-import LogoReUseText from '../assets/images/ReUse.svg';
-import ReUseLogo from '../assets/images/ReUse_SVG.svg';
+import EmailIcon from '../src/assets/images/icons/email.svg';
+import EyeIcon from '../src/assets/images/icons/eye.svg';
+import LockIcon from '../src/assets/images/icons/lock.svg';
+import LogoReUseText from '../src/assets/images/ReUse.svg';
+import ReUseLogo from '../src/assets/images/ReUse_SVG.svg';
 
 type Tab = 'Entrar' | 'Cadastrar';
 
@@ -60,12 +58,9 @@ export default function LoginScreen() {
 
         if (email) {
         await saveUserSession(email);
-        console.log("Sessão salva para:", email);
         }
-        
-        console.log("Submit via " + activeTab);
 
-        router.push('/home');
+        router.replace('/(tabs)/home');
     };
 
     return (

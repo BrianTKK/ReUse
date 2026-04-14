@@ -1,8 +1,8 @@
 import { useRouter } from "expo-router";
 import { View, Text } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
-import LogoReUseSVG from "../assets/images/ReUse_SVG.svg";
-import LogoReUseText from "../assets/images/ReUse.svg"; 
+import LogoReUseSVG from "../src/assets/images/ReUse_SVG.svg";
+import LogoReUseText from "../src/assets/images/ReUse.svg";
 
 import OnboardingCarousel from "../src/components/Carousel/OnboardingCarousel";
 import { colors } from "../constants/theme";

@@ -17,7 +17,13 @@
     },
     "plugins": [
       "expo-router",
-      "expo-font"
+      "expo-font",
+      [
+      "expo-image-picker",
+        {
+          "cameraPermission": "O ReUse! precisa de acesso à câmera para cadastrar itens."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,
