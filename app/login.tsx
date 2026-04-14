@@ -1,5 +1,5 @@
 import { AntDesign } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { useRouter, Href } from 'expo-router';
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -60,7 +60,7 @@ export default function LoginScreen() {
         await saveUserSession(email);
         }
 
-        router.replace('/(tabs)/home');
+        router.replace('/(tabs)/home' as Href);
     };
 
     return (
