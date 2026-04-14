@@ -7,16 +7,16 @@ export default function RootLayout() {
     PlusJakartaSans_600SemiBold,
     PlusJakartaSans_500Medium,
     PlusJakartaSans_400Regular
-  }); // Carrega as fontes
+  });
 
-  if (!fontsLoaded) {
-    return null;
-  } // Se as fontes não estiverem carregadas, retorna null
+  if (!fontsLoaded) return null;
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="index" />
       <Stack.Screen name="login" />
+      {/* grupo de abas */}
+      <Stack.Screen name="(tabs)" options={{ animation: 'fade' }} />
     </Stack>
   );
 }
