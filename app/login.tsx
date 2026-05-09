@@ -36,11 +36,14 @@ export default function LoginScreen() {
             const hasUpperCase = /[A-Z]/.test(text);
             const hasLowerCase = /[a-z]/.test(text);
             const hasMinLength = text.length >= 8;
+            const hasNumber = /[0-9]/.test(text);
 
             if (!hasMinLength) {
                 setPasswordError('A senha deve ter no mínimo 8 caracteres.');
             } else if (!hasUpperCase || !hasLowerCase) {
                 setPasswordError('A senha deve conter letras maiúsculas e minúsculas.');
+            } else if (!hasNumber) {
+                setPasswordError('A senha deve conter pelo menos 1 número.');
             } else {
                 setPasswordError('');
             }
@@ -48,6 +51,10 @@ export default function LoginScreen() {
     };
 
     const handleAction = async () => {
+        if (!email) {
+                 setPasswordError('Preencha o email.');
+                 return;
+        }
         if (activeTab === 'Cadastrar') {
             if (passwordError) return;
             if (password !== confirmPassword) {
@@ -56,9 +63,8 @@ export default function LoginScreen() {
             }
         }
 
-        if (email) {
+        
         await saveUserSession(email);
-        }
 
         router.replace('/(tabs)/home' as Href);
     };
@@ -81,7 +87,7 @@ export default function LoginScreen() {
                         <ReUseLogo width={40} height={40} />
                     </View>
                     <Typography.H2 style={{ fontWeight: '700', textAlign: 'center', marginBottom: 6 }}>
-                        Bem Vindo de Volta
+                        Bem-Vindo de Volta
                     </Typography.H2>
                     <Typography.Body2 style={{ textAlign: 'center', color: '#6B7280' }}>
                         Junte-se ao movimento eco-friendly
@@ -130,6 +136,9 @@ export default function LoginScreen() {
                         iconLeft={<EmailIcon width={20} height={20} />}
                         keyboardType="email-address"
                         autoCapitalize="none"
+                        value={email}
+                        onChangeText={setEmail}
+                        
                     />
 
                     <CustomTextInput
