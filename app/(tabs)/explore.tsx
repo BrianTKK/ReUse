@@ -4,10 +4,9 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  Linking
 } from 'react-native';
-
-declare const window: any;
 
 export default function TabPage() {
   const [cep, setCep] = useState('');
@@ -42,7 +41,7 @@ export default function TabPage() {
 
     const url = `https://www.google.com/maps/search/?api=1&query=${endereco.logradouro},${endereco.bairro},${endereco.localidade},${endereco.uf}`;
 
-    window.open(url, '_blank');
+    Linking.openURL(url);
   }
 
   return (
