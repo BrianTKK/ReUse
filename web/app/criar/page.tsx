@@ -18,6 +18,7 @@ async function criarItem(formData: FormData) {
     Plantas: "/items/planta.jpg",
     Bicicletas: "/items/bicicleta.jpg",
     Decoração: "/items/vaso.jpg",
+    Eletrônicos: "/items/monitor.jpg",
   };
 
   const image =

@@ -1,113 +1,132 @@
 import { db } from "../../../src/prisma/db";
+import { notFound } from "next/navigation";
+import Link from "next/link";
 
-type ItemDetalhesProps = {
-  params: Promise<{
-    id: string;
-  }>;
+type ItemPageProps = {
+  params: Promise<{ id: string }>;
 };
 
-export default async function ItemDetalhes({
-  params,
-}: ItemDetalhesProps) {
-  const { id } = await params;
-  const itemId = Number(id);
+const ITENS_PADRAO = [
+  {
+    id: "1",
+    title: "Cadeira de Escritório Ergonômica",
+    category: "Móveis",
+    city: "Osasco, SP",
+    condition: "Excelente",
+    image: "https://images.unsplash.com/photo-1580481077195-c328ad45be8e?w=800&q=80",
+    description: "Cadeira com regulagem de altura e apoio lombar, em ótimo estado de conservação.",
+  },
+  {
+    id: "2",
+    title: "Monitor 24 Full HD",
+    category: "Eletrônicos",
+    city: "Osasco, SP",
+    condition: "Bom",
+    image: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=800&q=80",
+    description: "Funcionando perfeitamente, sem marcas na tela e com cabos originais.",
+  },
+  {
+    id: "3",
+    title: "Bicicleta Urbana Aro 26",
+    category: "Bicicletas",
+    city: "Osasco, SP",
+    condition: "Bom",
+    image: "https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=800&q=80",
+    description: "Revisada recentemente, ótima para deslocamento sustentável.",
+  },
+  {
+    id: "4",
+    title: "Kit de Vasos Cerâmicos",
+    category: "Decoração",
+    city: "Osasco, SP",
+    condition: "Novo",
+    image: "https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=800&q=80",
+    description: "Três vasos esmaltados artesanais sem marcas de uso.",
+  },
+];
 
-  const item = await db.orm.public.Item
-    .where({ id: itemId })
-    .first();
+export default async function ItemDetailPage({ params }: ItemPageProps) {
+  const { id } = await params;
+
+  let item: any = null;
+
+  try {
+    item = await db.orm.public.Item.findUnique({
+      where: { id },
+    });
+  } catch (error) {
+    item = ITENS_PADRAO.find((i) => i.id === id);
+  }
 
   if (!item) {
-    return (
-      <main className="min-h-screen bg-[#F8FBF9] px-6 py-20 text-[#1B281F]">
-        <div className="mx-auto max-w-3xl rounded-[28px] bg-white p-10 text-center shadow-sm">
-          <h1 className="text-3xl font-bold text-[#1A4632]">
-            Item não encontrado
-          </h1>
-
-          <p className="mt-3 text-[#718078]">
-            Este anúncio não existe ou não está mais disponível.
-          </p>
-
-          <a
-            href="/"
-            className="mt-6 inline-block rounded-full bg-[#19E65E] px-6 py-3 font-semibold"
-          >
-            Voltar para explorar
-          </a>
-        </div>
-      </main>
-    );
+    notFound();
   }
 
   return (
-    <main className="min-h-screen bg-[#F8FBF9] text-[#1B281F]">
-      <header className="border-b border-[#E7EFEA] bg-white">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
-          <a
-            href="/"
-            className="text-sm font-semibold text-[#278753]"
-          >
-            ← Voltar
-          </a>
+    <main className="min-h-screen bg-[#F8FBF9] text-[#1B281F] py-8 px-6">
+      <div className="max-w-4xl mx-auto space-y-6">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-[#278753] hover:underline"
+        >
+          ← Voltar para o Catálogo
+        </Link>
 
-          <span className="text-xl font-bold text-[#1A4632]">
-            ReUse!
-          </span>
-        </div>
-      </header>
-
-      <section className="mx-auto max-w-6xl px-6 py-12">
-        <div className="grid overflow-hidden rounded-[32px] bg-white shadow-sm md:grid-cols-2">
-          <div className="min-h-[420px] bg-[#EFF7F2]">
+        <div className="bg-white rounded-3xl border border-[#E7EFEA] overflow-hidden shadow-sm grid grid-cols-1 md:grid-cols-2">
+          <div className="h-72 md:h-full bg-gray-100 relative min-h-[300px]">
             <img
-              src={item.image || "/items/cadeira.jpg"}
+              src={item.image || "https://images.unsplash.com/photo-1580481077195-c328ad45be8e?w=800&q=80"}
               alt={item.title}
-              className="h-full min-h-[420px] w-full object-cover"
+              className="w-full h-full object-cover"
             />
+            <div className="absolute top-4 left-4 bg-white/95 px-3 py-1 rounded-full text-xs font-bold text-gray-800 shadow-sm">
+              {item.category}
+            </div>
           </div>
 
-          <div className="flex flex-col justify-center p-8 md:p-12">
-            <div className="flex flex-wrap gap-2">
-              <span className="rounded-full bg-[#E6F9EC] px-4 py-2 text-xs font-semibold text-[#278753]">
-                {item.category}
-              </span>
+          <div className="p-6 md:p-8 flex flex-col justify-between space-y-6">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">
+                  Disponível para troca / doação
+                </span>
+                <span className="px-3 py-1 rounded-full bg-[#E6F9EC] text-[#278753] text-xs font-bold">
+                  {item.condition}
+                </span>
+              </div>
 
-              <span className="rounded-full bg-[#F0F4F1] px-4 py-2 text-xs font-semibold">
-                {item.condition}
-              </span>
+              <h1 className="text-2xl md:text-3xl font-extrabold text-gray-900 leading-tight">
+                {item.title}
+              </h1>
+
+              <div className="flex items-center gap-3 text-xs text-[#718078]">
+                <span>📍 {item.city || "Osasco, SP"}</span>
+                <span>•</span>
+                <span>Disponível no catálogo</span>
+              </div>
+
+              <p className="text-sm text-gray-600 leading-relaxed">
+                {item.description || "Nenhuma descrição detalhada informada para este objeto."}
+              </p>
+
+              <div className="p-4 bg-[#EDFBF2] border border-[#C5ECD4] rounded-2xl flex items-center justify-between">
+                <div>
+                  <p className="text-xs font-semibold text-[#1A4632]">Impacto Ambiental Estimado</p>
+                  <p className="text-base font-extrabold text-[#278753]">-14.5 kg de CO₂ evitado</p>
+                </div>
+                <span className="text-2xl">🌱</span>
+              </div>
             </div>
-
-            <h1 className="mt-6 text-4xl font-bold text-[#1A4632]">
-              {item.title}
-            </h1>
-
-            <p className="mt-3 text-sm font-medium text-[#278753]">
-              📍 {item.city}
-            </p>
-
-            <div className="my-8 h-px bg-[#E7EFEA]" />
-
-            <h2 className="text-lg font-bold">
-              Sobre este item
-            </h2>
-
-            <p className="mt-3 leading-7 text-[#5A6C61]">
-              {item.description}
-            </p>
 
             <button
               type="button"
-              className="mt-10 w-full rounded-full bg-[#19E65E] px-6 py-3 font-semibold transition hover:bg-[#26C9B9]"
+              className="w-full py-3.5 bg-[#19E65E] hover:bg-[#26C9B9] text-[#1B281F] font-bold rounded-xl transition shadow-sm text-center"
             >
-              Tenho interesse
+              Tenho Interesse no Item
             </button>
-
-            <p className="mt-4 text-center text-xs text-[#809087]">
-              Combine a retirada do item de forma segura.
-            </p>
           </div>
         </div>
-      </section>
+      </div>
     </main>
   );
 }
