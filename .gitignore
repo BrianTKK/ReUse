@@ -41,3 +41,6 @@ app-example
 # generated native folders
 /ios
 /android
+
+# download da instância do watsonx usado pelo gerador de actions
+assistant/base-export.json

@@ -1,0 +1,287 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "ReUse API",
+    "version": "1.0.0",
+    "description": "Operações que o assistente virtual do ReUse (watsonx Assistant) executa na plataforma. Toda resposta traz o campo message, já pronto para o chatbot exibir ao usuário."
+  },
+  "servers": [
+    {
+      "url": "https://reuse.obrian.me"
+    }
+  ],
+  "security": [
+    {
+      "ReUseApiKey": []
+    }
+  ],
+  "paths": {
+    "/api/assistant/items": {
+      "get": {
+        "operationId": "searchItems",
+        "summary": "Buscar itens disponíveis",
+        "description": "Procura itens ativos no catálogo por palavra-chave e/ou categoria.",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": false,
+            "description": "Palavra-chave (ex.: bicicleta)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "description": "Móveis, Plantas, Bicicletas, Decoração, Eletrônicos ou Outros",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resultado da busca",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "message": { "type": "string" },
+                    "total": { "type": "integer" },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": { "type": "integer" },
+                          "title": { "type": "string" },
+                          "category": { "type": "string" },
+                          "condition": { "type": "string" },
+                          "city": { "type": "string" },
+                          "url": { "type": "string" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createItem",
+        "summary": "Publicar item",
+        "description": "Cria um anúncio ativo para o usuário identificado pelo e-mail (a conta é criada se ainda não existir).",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "title", "category", "condition", "description"],
+                "properties": {
+                  "email": { "type": "string", "description": "E-mail do dono do anúncio" },
+                  "name": { "type": "string", "description": "Nome do usuário (opcional)" },
+                  "title": { "type": "string", "description": "Título do item" },
+                  "category": { "type": "string", "description": "Móveis, Plantas, Bicicletas, Decoração, Eletrônicos ou Outros" },
+                  "condition": { "type": "string", "description": "Novo, Excelente, Bom ou Regular" },
+                  "description": { "type": "string", "description": "Descrição do item" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Anúncio publicado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "message": { "type": "string" },
+                    "item": {
+                      "type": "object",
+                      "properties": {
+                        "id": { "type": "integer" },
+                        "title": { "type": "string" },
+                        "url": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/assistant/my-items": {
+      "post": {
+        "operationId": "listMyItems",
+        "summary": "Listar meus anúncios",
+        "description": "Lista os anúncios do usuário com o status de cada um (ativo, pausado ou trocado).",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email"],
+                "properties": {
+                  "email": { "type": "string", "description": "E-mail do usuário" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Anúncios do usuário",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "message": { "type": "string" },
+                    "total": { "type": "integer" },
+                    "active": { "type": "integer" },
+                    "paused": { "type": "integer" },
+                    "traded": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/assistant/my-items/pause": {
+      "post": {
+        "operationId": "pauseMyItems",
+        "summary": "Pausar minhas ofertas",
+        "description": "Pausa todas as ofertas ativas do usuário; elas saem do catálogo.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email"],
+                "properties": {
+                  "email": { "type": "string", "description": "E-mail do usuário" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Resultado da operação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "message": { "type": "string" },
+                    "count": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/assistant/my-items/resume": {
+      "post": {
+        "operationId": "resumeMyItems",
+        "summary": "Reativar minhas ofertas",
+        "description": "Reativa as ofertas pausadas do usuário; elas voltam para o catálogo.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email"],
+                "properties": {
+                  "email": { "type": "string", "description": "E-mail do usuário" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Resultado da operação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "message": { "type": "string" },
+                    "count": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/assistant/my-items/mark-traded": {
+      "post": {
+        "operationId": "markItemTraded",
+        "summary": "Marcar item como trocado",
+        "description": "Registra que um anúncio do usuário já foi trocado; ele sai do catálogo.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "itemId"],
+                "properties": {
+                  "email": { "type": "string", "description": "E-mail do usuário" },
+                  "itemId": { "type": "integer", "description": "Código do anúncio (aparece em Meus anúncios)" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Resultado da operação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "message": { "type": "string" },
+                    "itemId": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ReUseApiKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-api-key"
+      }
+    }
+  }
+}

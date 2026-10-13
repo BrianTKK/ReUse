@@ -1,0 +1,4815 @@
+{
+  "name": "ReUse! PT-BR",
+  "type": "action",
+  "valid": true,
+  "status": "Available",
+  "language": "pt-br",
+  "skill_id": "736c00b1-3384-40c3-81a6-447acaa56354",
+  "workspace": {
+    "actions": [
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_welcome_1",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "step_welcome_1",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Olá! 👋 Sou o assistente virtual do **ReUse!**, a plataforma de trocas e doações de Osasco e região.\n\nPosso **fazer tarefas por você**, como anunciar um item, pausar ou reativar suas ofertas e registrar uma troca, e também **tirar dúvidas** sobre como usar a plataforma. Por onde começamos?"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "options": [
+                    {
+                      "label": "Anunciar um item",
+                      "value": {
+                        "input": {
+                          "text": "Anunciar um item"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Buscar itens",
+                      "value": {
+                        "input": {
+                          "text": "Buscar itens"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Meus anúncios",
+                      "value": {
+                        "input": {
+                          "text": "Meus anúncios"
+                        }
+                      }
+                    },
+                    {
+                      "label": "O que você sabe fazer?",
+                      "value": {
+                        "input": {
+                          "text": "O que você sabe fazer?"
+                        }
+                      }
+                    }
+                  ],
+                  "response_type": "option",
+                  "repeat_on_reprompt": true
+                }
+              ]
+            }
+          }
+        ],
+        "title": "Saudação",
+        "action": "welcome",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "expression": "welcome"
+        },
+        "variables": [
+          {
+            "variable": "step_welcome_1",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Olá! 👋 Sou o assistente virtual do ReUse!, a plataforma de troca"
+          }
+        ],
+        "launch_mode": "learning",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": true,
+        "next_action": "action_101"
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_101_1",
+            "type": "standard",
+            "handlers": [
+              {
+                "type": "not_found",
+                "title": "validation_not_found_handler",
+                "output": {
+                  "generic": [
+                    {
+                      "values": [
+                        {
+                          "text_expression": {
+                            "concat": [
+                              {
+                                "scalar": "Não entendi sua resposta 😅 Pode tentar de novo?"
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "response_type": "text",
+                      "selection_policy": "sequential"
+                    }
+                  ]
+                },
+                "handler": "validation_not_found_handler",
+                "resolver": {
+                  "type": "prompt_again"
+                },
+                "next_handler": "validation_not_found_max_tries_handler"
+              },
+              {
+                "type": "not_found_max_tries",
+                "title": "validation_not_found_max_tries_handler",
+                "handler": "validation_not_found_max_tries_handler",
+                "resolver": {
+                  "type": "fallback"
+                }
+              }
+            ],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_101_1",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Para isso preciso do e-mail da sua conta no ReUse. Qual é?"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "question": {
+              "entity": "entity_email",
+              "max_tries": 3
+            },
+            "condition": {
+              "not": {
+                "exists": {
+                  "skill_variable": "email_usuario"
+                }
+              }
+            },
+            "next_step": "step_101_2"
+          },
+          {
+            "step": "step_101_2",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_101_2",
+            "condition": {
+              "exists": {
+                "variable": "step_101_1"
+              }
+            },
+            "context": {
+              "variables": [
+                {
+                  "value": {
+                    "variable": "step_101_1"
+                  },
+                  "skill_variable": "email_usuario"
+                }
+              ]
+            },
+            "next_step": "step_101_3"
+          },
+          {
+            "step": "step_101_3",
+            "type": "standard",
+            "handlers": [
+              {
+                "type": "not_found",
+                "title": "validation_not_found_handler",
+                "output": {
+                  "generic": [
+                    {
+                      "values": [
+                        {
+                          "text_expression": {
+                            "concat": [
+                              {
+                                "scalar": "Não entendi sua resposta 😅 Pode tentar de novo?"
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "response_type": "text",
+                      "selection_policy": "sequential"
+                    }
+                  ]
+                },
+                "handler": "validation_not_found_handler",
+                "resolver": {
+                  "type": "prompt_again"
+                },
+                "next_handler": "validation_not_found_max_tries_handler"
+              },
+              {
+                "type": "not_found_max_tries",
+                "title": "validation_not_found_max_tries_handler",
+                "handler": "validation_not_found_max_tries_handler",
+                "resolver": {
+                  "type": "fallback"
+                }
+              }
+            ],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_101_3",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Vou pausar **todas** as suas ofertas ativas. Elas saem do catálogo até você pedir para reativar. Posso continuar?"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "options": [
+                    {
+                      "label": "Sim",
+                      "value": {
+                        "input": {
+                          "text": "Sim"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Não",
+                      "value": {
+                        "input": {
+                          "text": "Não"
+                        }
+                      }
+                    }
+                  ],
+                  "response_type": "option",
+                  "repeat_on_reprompt": true
+                }
+              ]
+            },
+            "question": {
+              "entity": "sys-yes-no",
+              "max_tries": 3,
+              "response_collection_behavior": "always_ask"
+            },
+            "next_step": "step_101_4"
+          },
+          {
+            "step": "step_101_4",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "callout",
+              "callout": {
+                "path": "/api/assistant/my-items/pause",
+                "type": "integration_interaction",
+                "method": "POST",
+                "internal": {
+                  "catalog_item_id": "9d569f1b-0847-4700-bfbf-128ceaf18f36",
+                  "spec_hash_id": "8f2a3b64c168e812211322bda8ca38b0252f823bf800b8b1adae14b3c41d5929"
+                },
+                "request_mapping": {
+                  "body": [
+                    {
+                      "value": {
+                        "skill_variable": "email_usuario"
+                      },
+                      "parameter": "email"
+                    }
+                  ]
+                },
+                "result_variable": "step_101_4_result_1"
+              }
+            },
+            "variable": "step_101_4",
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_101_3"
+                },
+                {
+                  "scalar": "yes"
+                }
+              ]
+            },
+            "next_step": "step_101_5"
+          },
+          {
+            "step": "step_101_5",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_101_5",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "variable": "step_101_4_result_1",
+                            "variable_path": "body.message"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "condition": {
+              "and": [
+                {
+                  "eq": [
+                    {
+                      "variable": "step_101_3"
+                    },
+                    {
+                      "scalar": "yes"
+                    }
+                  ]
+                },
+                {
+                  "eq": [
+                    {
+                      "variable": "step_101_4_result_1",
+                      "variable_path": "success"
+                    },
+                    {
+                      "scalar": true
+                    }
+                  ]
+                }
+              ]
+            },
+            "next_step": "step_101_6"
+          },
+          {
+            "step": "step_101_6",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_101_6",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Não consegui falar com o ReUse agora 😕 Tente de novo em alguns instantes."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "condition": {
+              "and": [
+                {
+                  "eq": [
+                    {
+                      "variable": "step_101_3"
+                    },
+                    {
+                      "scalar": "yes"
+                    }
+                  ]
+                },
+                {
+                  "eq": [
+                    {
+                      "variable": "step_101_4_result_1",
+                      "variable_path": "success"
+                    },
+                    {
+                      "scalar": false
+                    }
+                  ]
+                }
+              ]
+            },
+            "next_step": "step_101_7"
+          },
+          {
+            "step": "step_101_7",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_101_7",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Tudo bem, não mexi em nada. Suas ofertas continuam no ar 👍"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_101_3"
+                },
+                {
+                  "scalar": "no"
+                }
+              ]
+            }
+          }
+        ],
+        "title": "Pausar minhas ofertas",
+        "action": "action_101",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_101_intent_1"
+        },
+        "variables": [
+          {
+            "variable": "step_101_1",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Para isso preciso do e-mail da sua conta no ReUse. Qual é?"
+          },
+          {
+            "variable": "step_101_2",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            }
+          },
+          {
+            "variable": "step_101_3",
+            "data_type": "yes_no",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Vou pausar todas as suas ofertas ativas. Elas saem do catálogo a"
+          },
+          {
+            "variable": "step_101_4",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            }
+          },
+          {
+            "variable": "step_101_4_result_1",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            }
+          },
+          {
+            "variable": "step_101_5",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "{variable}"
+          },
+          {
+            "variable": "step_101_6",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Não consegui falar com o ReUse agora 😕 Tente de novo em alguns i"
+          },
+          {
+            "variable": "step_101_7",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Tudo bem, não mexi em nada. Suas ofertas continuam no ar 👍"
+          }
+        ],
+        "launch_mode": "learning",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": false,
+        "next_action": "action_102"
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_102_1",
+            "type": "standard",
+            "handlers": [
+              {
+                "type": "not_found",
+                "title": "validation_not_found_handler",
+                "output": {
+                  "generic": [
+                    {
+                      "values": [
+                        {
+                          "text_expression": {
+                            "concat": [
+                              {
+                                "scalar": "Não entendi sua resposta 😅 Pode tentar de novo?"
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "response_type": "text",
+                      "selection_policy": "sequential"
+                    }
+                  ]
+                },
+                "handler": "validation_not_found_handler",
+                "resolver": {
+                  "type": "prompt_again"
+                },
+                "next_handler": "validation_not_found_max_tries_handler"
+              },
+              {
+                "type": "not_found_max_tries",
+                "title": "validation_not_found_max_tries_handler",
+                "handler": "validation_not_found_max_tries_handler",
+                "resolver": {
+                  "type": "fallback"
+                }
+              }
+            ],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_102_1",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Para isso preciso do e-mail da sua conta no ReUse. Qual é?"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "question": {
+              "entity": "entity_email",
+              "max_tries": 3
+            },
+            "condition": {
+              "not": {
+                "exists": {
+                  "skill_variable": "email_usuario"
+                }
+              }
+            },
+            "next_step": "step_102_2"
+          },
+          {
+            "step": "step_102_2",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_102_2",
+            "condition": {
+              "exists": {
+                "variable": "step_102_1"
+              }
+            },
+            "context": {
+              "variables": [
+                {
+                  "value": {
+                    "variable": "step_102_1"
+                  },
+                  "skill_variable": "email_usuario"
+                }
+              ]
+            },
+            "next_step": "step_102_3"
+          },
+          {
+            "step": "step_102_3",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "callout",
+              "callout": {
+                "path": "/api/assistant/my-items/resume",
+                "type": "integration_interaction",
+                "method": "POST",
+                "internal": {
+                  "catalog_item_id": "9d569f1b-0847-4700-bfbf-128ceaf18f36",
+                  "spec_hash_id": "8f2a3b64c168e812211322bda8ca38b0252f823bf800b8b1adae14b3c41d5929"
+                },
+                "request_mapping": {
+                  "body": [
+                    {
+                      "value": {
+                        "skill_variable": "email_usuario"
+                      },
+                      "parameter": "email"
+                    }
+                  ]
+                },
+                "result_variable": "step_102_3_result_1"
+              }
+            },
+            "variable": "step_102_3",
+            "next_step": "step_102_4"
+          },
+          {
+            "step": "step_102_4",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_102_4",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "variable": "step_102_3_result_1",
+                            "variable_path": "body.message"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_102_3_result_1",
+                  "variable_path": "success"
+                },
+                {
+                  "scalar": true
+                }
+              ]
+            },
+            "next_step": "step_102_5"
+          },
+          {
+            "step": "step_102_5",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_102_5",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Não consegui falar com o ReUse agora 😕 Tente de novo em alguns instantes."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_102_3_result_1",
+                  "variable_path": "success"
+                },
+                {
+                  "scalar": false
+                }
+              ]
+            }
+          }
+        ],
+        "title": "Reativar minhas ofertas",
+        "action": "action_102",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_102_intent_1"
+        },
+        "variables": [
+          {
+            "variable": "step_102_1",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Para isso preciso do e-mail da sua conta no ReUse. Qual é?"
+          },
+          {
+            "variable": "step_102_2",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            }
+          },
+          {
+            "variable": "step_102_3",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            }
+          },
+          {
+            "variable": "step_102_3_result_1",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            }
+          },
+          {
+            "variable": "step_102_4",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "{variable}"
+          },
+          {
+            "variable": "step_102_5",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Não consegui falar com o ReUse agora 😕 Tente de novo em alguns i"
+          }
+        ],
+        "launch_mode": "learning",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": false,
+        "next_action": "action_103"
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_103_1",
+            "type": "standard",
+            "handlers": [
+              {
+                "type": "not_found",
+                "title": "validation_not_found_handler",
+                "output": {
+                  "generic": [
+                    {
+                      "values": [
+                        {
+                          "text_expression": {
+                            "concat": [
+                              {
+                                "scalar": "Não entendi sua resposta 😅 Pode tentar de novo?"
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "response_type": "text",
+                      "selection_policy": "sequential"
+                    }
+                  ]
+                },
+                "handler": "validation_not_found_handler",
+                "resolver": {
+                  "type": "prompt_again"
+                },
+                "next_handler": "validation_not_found_max_tries_handler"
+              },
+              {
+                "type": "not_found_max_tries",
+                "title": "validation_not_found_max_tries_handler",
+                "handler": "validation_not_found_max_tries_handler",
+                "resolver": {
+                  "type": "fallback"
+                }
+              }
+            ],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_103_1",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Para isso preciso do e-mail da sua conta no ReUse. Qual é?"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "question": {
+              "entity": "entity_email",
+              "max_tries": 3
+            },
+            "condition": {
+              "not": {
+                "exists": {
+                  "skill_variable": "email_usuario"
+                }
+              }
+            },
+            "next_step": "step_103_2"
+          },
+          {
+            "step": "step_103_2",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_103_2",
+            "condition": {
+              "exists": {
+                "variable": "step_103_1"
+              }
+            },
+            "context": {
+              "variables": [
+                {
+                  "value": {
+                    "variable": "step_103_1"
+                  },
+                  "skill_variable": "email_usuario"
+                }
+              ]
+            },
+            "next_step": "step_103_3"
+          },
+          {
+            "step": "step_103_3",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "callout",
+              "callout": {
+                "path": "/api/assistant/my-items",
+                "type": "integration_interaction",
+                "method": "POST",
+                "internal": {
+                  "catalog_item_id": "9d569f1b-0847-4700-bfbf-128ceaf18f36",
+                  "spec_hash_id": "8f2a3b64c168e812211322bda8ca38b0252f823bf800b8b1adae14b3c41d5929"
+                },
+                "request_mapping": {
+                  "body": [
+                    {
+                      "value": {
+                        "skill_variable": "email_usuario"
+                      },
+                      "parameter": "email"
+                    }
+                  ]
+                },
+                "result_variable": "step_103_3_result_1"
+              }
+            },
+            "variable": "step_103_3",
+            "next_step": "step_103_4"
+          },
+          {
+            "step": "step_103_4",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_103_4",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "variable": "step_103_3_result_1",
+                            "variable_path": "body.message"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_103_3_result_1",
+                  "variable_path": "success"
+                },
+                {
+                  "scalar": true
+                }
+              ]
+            },
+            "next_step": "step_103_5"
+          },
+          {
+            "step": "step_103_5",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_103_5",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Não consegui falar com o ReUse agora 😕 Tente de novo em alguns instantes."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_103_3_result_1",
+                  "variable_path": "success"
+                },
+                {
+                  "scalar": false
+                }
+              ]
+            }
+          }
+        ],
+        "title": "Meus anúncios",
+        "action": "action_103",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_103_intent_1"
+        },
+        "variables": [
+          {
+            "variable": "step_103_1",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Para isso preciso do e-mail da sua conta no ReUse. Qual é?"
+          },
+          {
+            "variable": "step_103_2",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            }
+          },
+          {
+            "variable": "step_103_3",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            }
+          },
+          {
+            "variable": "step_103_3_result_1",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            }
+          },
+          {
+            "variable": "step_103_4",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "{variable}"
+          },
+          {
+            "variable": "step_103_5",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Não consegui falar com o ReUse agora 😕 Tente de novo em alguns i"
+          }
+        ],
+        "launch_mode": "learning",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": false,
+        "next_action": "action_104"
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_104_1",
+            "type": "standard",
+            "handlers": [
+              {
+                "type": "not_found",
+                "title": "validation_not_found_handler",
+                "output": {
+                  "generic": [
+                    {
+                      "values": [
+                        {
+                          "text_expression": {
+                            "concat": [
+                              {
+                                "scalar": "Não entendi sua resposta 😅 Pode tentar de novo?"
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "response_type": "text",
+                      "selection_policy": "sequential"
+                    }
+                  ]
+                },
+                "handler": "validation_not_found_handler",
+                "resolver": {
+                  "type": "prompt_again"
+                },
+                "next_handler": "validation_not_found_max_tries_handler"
+              },
+              {
+                "type": "not_found_max_tries",
+                "title": "validation_not_found_max_tries_handler",
+                "handler": "validation_not_found_max_tries_handler",
+                "resolver": {
+                  "type": "fallback"
+                }
+              }
+            ],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_104_1",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Para isso preciso do e-mail da sua conta no ReUse. Qual é?"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "question": {
+              "entity": "entity_email",
+              "max_tries": 3
+            },
+            "condition": {
+              "not": {
+                "exists": {
+                  "skill_variable": "email_usuario"
+                }
+              }
+            },
+            "next_step": "step_104_2"
+          },
+          {
+            "step": "step_104_2",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_104_2",
+            "condition": {
+              "exists": {
+                "variable": "step_104_1"
+              }
+            },
+            "context": {
+              "variables": [
+                {
+                  "value": {
+                    "variable": "step_104_1"
+                  },
+                  "skill_variable": "email_usuario"
+                }
+              ]
+            },
+            "next_step": "step_104_3"
+          },
+          {
+            "step": "step_104_3",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_104_3",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Vamos lá! Qual é o **título** do anúncio? Ex.: Cadeira de escritório ergonômica"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "question": {
+              "free_text": true
+            },
+            "next_step": "step_104_4"
+          },
+          {
+            "step": "step_104_4",
+            "type": "standard",
+            "handlers": [
+              {
+                "type": "not_found",
+                "title": "validation_not_found_handler",
+                "output": {
+                  "generic": [
+                    {
+                      "values": [
+                        {
+                          "text_expression": {
+                            "concat": [
+                              {
+                                "scalar": "Não entendi sua resposta 😅 Pode tentar de novo?"
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "response_type": "text",
+                      "selection_policy": "sequential"
+                    }
+                  ]
+                },
+                "handler": "validation_not_found_handler",
+                "resolver": {
+                  "type": "prompt_again"
+                },
+                "next_handler": "validation_not_found_max_tries_handler"
+              },
+              {
+                "type": "not_found_max_tries",
+                "title": "validation_not_found_max_tries_handler",
+                "handler": "validation_not_found_max_tries_handler",
+                "resolver": {
+                  "type": "fallback"
+                }
+              }
+            ],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_104_4",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Em qual **categoria** ele se encaixa?"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "options": [
+                    {
+                      "label": "Móveis",
+                      "value": {
+                        "input": {
+                          "text": "Móveis"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Plantas",
+                      "value": {
+                        "input": {
+                          "text": "Plantas"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Bicicletas",
+                      "value": {
+                        "input": {
+                          "text": "Bicicletas"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Decoração",
+                      "value": {
+                        "input": {
+                          "text": "Decoração"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Eletrônicos",
+                      "value": {
+                        "input": {
+                          "text": "Eletrônicos"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Outros",
+                      "value": {
+                        "input": {
+                          "text": "Outros"
+                        }
+                      }
+                    }
+                  ],
+                  "response_type": "option",
+                  "repeat_on_reprompt": true
+                }
+              ]
+            },
+            "question": {
+              "entity": "entity_categoria",
+              "max_tries": 3
+            },
+            "next_step": "step_104_5"
+          },
+          {
+            "step": "step_104_5",
+            "type": "standard",
+            "handlers": [
+              {
+                "type": "not_found",
+                "title": "validation_not_found_handler",
+                "output": {
+                  "generic": [
+                    {
+                      "values": [
+                        {
+                          "text_expression": {
+                            "concat": [
+                              {
+                                "scalar": "Não entendi sua resposta 😅 Pode tentar de novo?"
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "response_type": "text",
+                      "selection_policy": "sequential"
+                    }
+                  ]
+                },
+                "handler": "validation_not_found_handler",
+                "resolver": {
+                  "type": "prompt_again"
+                },
+                "next_handler": "validation_not_found_max_tries_handler"
+              },
+              {
+                "type": "not_found_max_tries",
+                "title": "validation_not_found_max_tries_handler",
+                "handler": "validation_not_found_max_tries_handler",
+                "resolver": {
+                  "type": "fallback"
+                }
+              }
+            ],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_104_5",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Qual é o **estado de conservação**?"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "options": [
+                    {
+                      "label": "Novo",
+                      "value": {
+                        "input": {
+                          "text": "Novo"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Excelente",
+                      "value": {
+                        "input": {
+                          "text": "Excelente"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Bom",
+                      "value": {
+                        "input": {
+                          "text": "Bom"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Regular",
+                      "value": {
+                        "input": {
+                          "text": "Regular"
+                        }
+                      }
+                    }
+                  ],
+                  "response_type": "option",
+                  "repeat_on_reprompt": true
+                }
+              ]
+            },
+            "question": {
+              "entity": "entity_estado",
+              "max_tries": 3
+            },
+            "next_step": "step_104_6"
+          },
+          {
+            "step": "step_104_6",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_104_6",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Agora uma **descrição**: conte o estado, medidas, defeitos e o que você aceita em troca (ou se é doação)."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "question": {
+              "free_text": true
+            },
+            "next_step": "step_104_7"
+          },
+          {
+            "step": "step_104_7",
+            "type": "standard",
+            "handlers": [
+              {
+                "type": "not_found",
+                "title": "validation_not_found_handler",
+                "output": {
+                  "generic": [
+                    {
+                      "values": [
+                        {
+                          "text_expression": {
+                            "concat": [
+                              {
+                                "scalar": "Não entendi sua resposta 😅 Pode tentar de novo?"
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "response_type": "text",
+                      "selection_policy": "sequential"
+                    }
+                  ]
+                },
+                "handler": "validation_not_found_handler",
+                "resolver": {
+                  "type": "prompt_again"
+                },
+                "next_handler": "validation_not_found_max_tries_handler"
+              },
+              {
+                "type": "not_found_max_tries",
+                "title": "validation_not_found_max_tries_handler",
+                "handler": "validation_not_found_max_tries_handler",
+                "resolver": {
+                  "type": "fallback"
+                }
+              }
+            ],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_104_7",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Confere o anúncio:\n\n**"
+                          },
+                          {
+                            "variable": "step_104_3"
+                          },
+                          {
+                            "scalar": "**\nCategoria: "
+                          },
+                          {
+                            "variable": "step_104_4"
+                          },
+                          {
+                            "scalar": "\nEstado: "
+                          },
+                          {
+                            "variable": "step_104_5"
+                          },
+                          {
+                            "scalar": "\n"
+                          },
+                          {
+                            "variable": "step_104_6"
+                          },
+                          {
+                            "scalar": "\n\nPosso publicar?"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "options": [
+                    {
+                      "label": "Sim",
+                      "value": {
+                        "input": {
+                          "text": "Sim"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Não",
+                      "value": {
+                        "input": {
+                          "text": "Não"
+                        }
+                      }
+                    }
+                  ],
+                  "response_type": "option",
+                  "repeat_on_reprompt": true
+                }
+              ]
+            },
+            "question": {
+              "entity": "sys-yes-no",
+              "max_tries": 3,
+              "response_collection_behavior": "always_ask"
+            },
+            "next_step": "step_104_8"
+          },
+          {
+            "step": "step_104_8",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "callout",
+              "callout": {
+                "path": "/api/assistant/items",
+                "type": "integration_interaction",
+                "method": "POST",
+                "internal": {
+                  "catalog_item_id": "9d569f1b-0847-4700-bfbf-128ceaf18f36",
+                  "spec_hash_id": "8f2a3b64c168e812211322bda8ca38b0252f823bf800b8b1adae14b3c41d5929"
+                },
+                "request_mapping": {
+                  "body": [
+                    {
+                      "value": {
+                        "skill_variable": "email_usuario"
+                      },
+                      "parameter": "email"
+                    },
+                    {
+                      "value": {
+                        "variable": "step_104_3"
+                      },
+                      "parameter": "title"
+                    },
+                    {
+                      "value": {
+                        "variable": "step_104_4"
+                      },
+                      "parameter": "category"
+                    },
+                    {
+                      "value": {
+                        "variable": "step_104_5"
+                      },
+                      "parameter": "condition"
+                    },
+                    {
+                      "value": {
+                        "variable": "step_104_6"
+                      },
+                      "parameter": "description"
+                    }
+                  ]
+                },
+                "result_variable": "step_104_8_result_1"
+              }
+            },
+            "variable": "step_104_8",
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_104_7"
+                },
+                {
+                  "scalar": "yes"
+                }
+              ]
+            },
+            "next_step": "step_104_9"
+          },
+          {
+            "step": "step_104_9",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_104_9",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "variable": "step_104_8_result_1",
+                            "variable_path": "body.message"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "condition": {
+              "and": [
+                {
+                  "eq": [
+                    {
+                      "variable": "step_104_7"
+                    },
+                    {
+                      "scalar": "yes"
+                    }
+                  ]
+                },
+                {
+                  "eq": [
+                    {
+                      "variable": "step_104_8_result_1",
+                      "variable_path": "success"
+                    },
+                    {
+                      "scalar": true
+                    }
+                  ]
+                }
+              ]
+            },
+            "next_step": "step_104_10"
+          },
+          {
+            "step": "step_104_10",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_104_10",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Não consegui falar com o ReUse agora 😕 Tente de novo em alguns instantes."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "condition": {
+              "and": [
+                {
+                  "eq": [
+                    {
+                      "variable": "step_104_7"
+                    },
+                    {
+                      "scalar": "yes"
+                    }
+                  ]
+                },
+                {
+                  "eq": [
+                    {
+                      "variable": "step_104_8_result_1",
+                      "variable_path": "success"
+                    },
+                    {
+                      "scalar": false
+                    }
+                  ]
+                }
+              ]
+            },
+            "next_step": "step_104_11"
+          },
+          {
+            "step": "step_104_11",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_104_11",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Sem problemas, o anúncio não foi publicado. Quando quiser, é só dizer \"anunciar um item\"."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_104_7"
+                },
+                {
+                  "scalar": "no"
+                }
+              ]
+            }
+          }
+        ],
+        "title": "Anunciar um item",
+        "action": "action_104",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_104_intent_1"
+        },
+        "variables": [
+          {
+            "variable": "step_104_1",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Para isso preciso do e-mail da sua conta no ReUse. Qual é?"
+          },
+          {
+            "variable": "step_104_2",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            }
+          },
+          {
+            "variable": "step_104_3",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Vamos lá! Qual é o título do anúncio? Ex.: Cadeira de escritório"
+          },
+          {
+            "variable": "step_104_4",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Em qual categoria ele se encaixa?"
+          },
+          {
+            "variable": "step_104_5",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Qual é o estado de conservação?"
+          },
+          {
+            "variable": "step_104_6",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Agora uma descrição: conte o estado, medidas, defeitos e o que v"
+          },
+          {
+            "variable": "step_104_7",
+            "data_type": "yes_no",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Confere o anúncio: {variable} Categoria: {variable} Estado: {var"
+          },
+          {
+            "variable": "step_104_8",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            }
+          },
+          {
+            "variable": "step_104_8_result_1",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            }
+          },
+          {
+            "variable": "step_104_9",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "{variable}"
+          },
+          {
+            "variable": "step_104_10",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Não consegui falar com o ReUse agora 😕 Tente de novo em alguns i"
+          },
+          {
+            "variable": "step_104_11",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Sem problemas, o anúncio não foi publicado. Quando quiser, é só "
+          }
+        ],
+        "launch_mode": "learning",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": false,
+        "next_action": "action_105"
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_105_1",
+            "type": "standard",
+            "handlers": [
+              {
+                "type": "not_found",
+                "title": "validation_not_found_handler",
+                "output": {
+                  "generic": [
+                    {
+                      "values": [
+                        {
+                          "text_expression": {
+                            "concat": [
+                              {
+                                "scalar": "Não entendi sua resposta 😅 Pode tentar de novo?"
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "response_type": "text",
+                      "selection_policy": "sequential"
+                    }
+                  ]
+                },
+                "handler": "validation_not_found_handler",
+                "resolver": {
+                  "type": "prompt_again"
+                },
+                "next_handler": "validation_not_found_max_tries_handler"
+              },
+              {
+                "type": "not_found_max_tries",
+                "title": "validation_not_found_max_tries_handler",
+                "handler": "validation_not_found_max_tries_handler",
+                "resolver": {
+                  "type": "fallback"
+                }
+              }
+            ],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_105_1",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Para isso preciso do e-mail da sua conta no ReUse. Qual é?"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "question": {
+              "entity": "entity_email",
+              "max_tries": 3
+            },
+            "condition": {
+              "not": {
+                "exists": {
+                  "skill_variable": "email_usuario"
+                }
+              }
+            },
+            "next_step": "step_105_2"
+          },
+          {
+            "step": "step_105_2",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_105_2",
+            "condition": {
+              "exists": {
+                "variable": "step_105_1"
+              }
+            },
+            "context": {
+              "variables": [
+                {
+                  "value": {
+                    "variable": "step_105_1"
+                  },
+                  "skill_variable": "email_usuario"
+                }
+              ]
+            },
+            "next_step": "step_105_3"
+          },
+          {
+            "step": "step_105_3",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "callout",
+              "callout": {
+                "path": "/api/assistant/my-items",
+                "type": "integration_interaction",
+                "method": "POST",
+                "internal": {
+                  "catalog_item_id": "9d569f1b-0847-4700-bfbf-128ceaf18f36",
+                  "spec_hash_id": "8f2a3b64c168e812211322bda8ca38b0252f823bf800b8b1adae14b3c41d5929"
+                },
+                "request_mapping": {
+                  "body": [
+                    {
+                      "value": {
+                        "skill_variable": "email_usuario"
+                      },
+                      "parameter": "email"
+                    }
+                  ]
+                },
+                "result_variable": "step_105_3_result_1"
+              }
+            },
+            "variable": "step_105_3",
+            "next_step": "step_105_4"
+          },
+          {
+            "step": "step_105_4",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_105_4",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "variable": "step_105_3_result_1",
+                            "variable_path": "body.message"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_105_3_result_1",
+                  "variable_path": "success"
+                },
+                {
+                  "scalar": true
+                }
+              ]
+            },
+            "next_step": "step_105_5"
+          },
+          {
+            "step": "step_105_5",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_105_5",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Não consegui falar com o ReUse agora 😕 Tente de novo em alguns instantes."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_105_3_result_1",
+                  "variable_path": "success"
+                },
+                {
+                  "scalar": false
+                }
+              ]
+            },
+            "next_step": "step_105_6"
+          },
+          {
+            "step": "step_105_6",
+            "type": "standard",
+            "handlers": [
+              {
+                "type": "not_found",
+                "title": "validation_not_found_handler",
+                "output": {
+                  "generic": [
+                    {
+                      "values": [
+                        {
+                          "text_expression": {
+                            "concat": [
+                              {
+                                "scalar": "Não entendi sua resposta 😅 Pode tentar de novo?"
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "response_type": "text",
+                      "selection_policy": "sequential"
+                    }
+                  ]
+                },
+                "handler": "validation_not_found_handler",
+                "resolver": {
+                  "type": "prompt_again"
+                },
+                "next_handler": "validation_not_found_max_tries_handler"
+              },
+              {
+                "type": "not_found_max_tries",
+                "title": "validation_not_found_max_tries_handler",
+                "handler": "validation_not_found_max_tries_handler",
+                "resolver": {
+                  "type": "fallback"
+                }
+              }
+            ],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_105_6",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Qual é o **código** do item que foi trocado? É o número depois do #."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "question": {
+              "entity": "sys-number",
+              "max_tries": 3
+            },
+            "condition": {
+              "and": [
+                {
+                  "eq": [
+                    {
+                      "variable": "step_105_3_result_1",
+                      "variable_path": "success"
+                    },
+                    {
+                      "scalar": true
+                    }
+                  ]
+                },
+                {
+                  "gt": [
+                    {
+                      "variable": "step_105_3_result_1",
+                      "variable_path": "body.total"
+                    },
+                    {
+                      "scalar": 0
+                    }
+                  ]
+                }
+              ]
+            },
+            "next_step": "step_105_7"
+          },
+          {
+            "step": "step_105_7",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "callout",
+              "callout": {
+                "path": "/api/assistant/my-items/mark-traded",
+                "type": "integration_interaction",
+                "method": "POST",
+                "internal": {
+                  "catalog_item_id": "9d569f1b-0847-4700-bfbf-128ceaf18f36",
+                  "spec_hash_id": "8f2a3b64c168e812211322bda8ca38b0252f823bf800b8b1adae14b3c41d5929"
+                },
+                "request_mapping": {
+                  "body": [
+                    {
+                      "value": {
+                        "skill_variable": "email_usuario"
+                      },
+                      "parameter": "email"
+                    },
+                    {
+                      "value": {
+                        "variable": "step_105_6"
+                      },
+                      "parameter": "itemId"
+                    }
+                  ]
+                },
+                "result_variable": "step_105_7_result_1"
+              }
+            },
+            "variable": "step_105_7",
+            "condition": {
+              "exists": {
+                "variable": "step_105_6"
+              }
+            },
+            "next_step": "step_105_8"
+          },
+          {
+            "step": "step_105_8",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_105_8",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "variable": "step_105_7_result_1",
+                            "variable_path": "body.message"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "condition": {
+              "and": [
+                {
+                  "exists": {
+                    "variable": "step_105_6"
+                  }
+                },
+                {
+                  "eq": [
+                    {
+                      "variable": "step_105_7_result_1",
+                      "variable_path": "success"
+                    },
+                    {
+                      "scalar": true
+                    }
+                  ]
+                }
+              ]
+            },
+            "next_step": "step_105_9"
+          },
+          {
+            "step": "step_105_9",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_105_9",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Não consegui falar com o ReUse agora 😕 Tente de novo em alguns instantes."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "condition": {
+              "and": [
+                {
+                  "exists": {
+                    "variable": "step_105_6"
+                  }
+                },
+                {
+                  "eq": [
+                    {
+                      "variable": "step_105_7_result_1",
+                      "variable_path": "success"
+                    },
+                    {
+                      "scalar": false
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "title": "Registrar uma troca",
+        "action": "action_105",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_105_intent_1"
+        },
+        "variables": [
+          {
+            "variable": "step_105_1",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Para isso preciso do e-mail da sua conta no ReUse. Qual é?"
+          },
+          {
+            "variable": "step_105_2",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            }
+          },
+          {
+            "variable": "step_105_3",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            }
+          },
+          {
+            "variable": "step_105_3_result_1",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            }
+          },
+          {
+            "variable": "step_105_4",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "{variable}"
+          },
+          {
+            "variable": "step_105_5",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Não consegui falar com o ReUse agora 😕 Tente de novo em alguns i"
+          },
+          {
+            "variable": "step_105_6",
+            "data_type": "number",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Qual é o código do item que foi trocado? É o número depois do ."
+          },
+          {
+            "variable": "step_105_7",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            }
+          },
+          {
+            "variable": "step_105_7_result_1",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            }
+          },
+          {
+            "variable": "step_105_8",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "{variable}"
+          },
+          {
+            "variable": "step_105_9",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Não consegui falar com o ReUse agora 😕 Tente de novo em alguns i"
+          }
+        ],
+        "launch_mode": "learning",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": false,
+        "next_action": "action_106"
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_106_1",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_106_1",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "O que você está procurando? Pode ser uma palavra, como **bicicleta** ou **vaso**."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "question": {
+              "free_text": true
+            },
+            "next_step": "step_106_2"
+          },
+          {
+            "step": "step_106_2",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "callout",
+              "callout": {
+                "path": "/api/assistant/items",
+                "type": "integration_interaction",
+                "method": "GET",
+                "internal": {
+                  "catalog_item_id": "9d569f1b-0847-4700-bfbf-128ceaf18f36",
+                  "spec_hash_id": "8f2a3b64c168e812211322bda8ca38b0252f823bf800b8b1adae14b3c41d5929"
+                },
+                "request_mapping": {
+                  "query": [
+                    {
+                      "value": {
+                        "variable": "step_106_1"
+                      },
+                      "parameter": "query"
+                    }
+                  ]
+                },
+                "result_variable": "step_106_2_result_1"
+              }
+            },
+            "variable": "step_106_2",
+            "next_step": "step_106_3"
+          },
+          {
+            "step": "step_106_3",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_106_3",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "variable": "step_106_2_result_1",
+                            "variable_path": "body.message"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_106_2_result_1",
+                  "variable_path": "success"
+                },
+                {
+                  "scalar": true
+                }
+              ]
+            },
+            "next_step": "step_106_4"
+          },
+          {
+            "step": "step_106_4",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_106_4",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Não consegui falar com o ReUse agora 😕 Tente de novo em alguns instantes."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "condition": {
+              "eq": [
+                {
+                  "variable": "step_106_2_result_1",
+                  "variable_path": "success"
+                },
+                {
+                  "scalar": false
+                }
+              ]
+            }
+          }
+        ],
+        "title": "Buscar itens",
+        "action": "action_106",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_106_intent_1"
+        },
+        "variables": [
+          {
+            "variable": "step_106_1",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "O que você está procurando? Pode ser uma palavra, como bicicleta"
+          },
+          {
+            "variable": "step_106_2",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            }
+          },
+          {
+            "variable": "step_106_2_result_1",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            }
+          },
+          {
+            "variable": "step_106_3",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "{variable}"
+          },
+          {
+            "variable": "step_106_4",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Não consegui falar com o ReUse agora 😕 Tente de novo em alguns i"
+          }
+        ],
+        "launch_mode": "learning",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": false,
+        "next_action": "action_107"
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_107_1",
+            "type": "standard",
+            "handlers": [
+              {
+                "type": "not_found",
+                "title": "validation_not_found_handler",
+                "output": {
+                  "generic": [
+                    {
+                      "values": [
+                        {
+                          "text_expression": {
+                            "concat": [
+                              {
+                                "scalar": "Não entendi sua resposta 😅 Pode tentar de novo?"
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "response_type": "text",
+                      "selection_policy": "sequential"
+                    }
+                  ]
+                },
+                "handler": "validation_not_found_handler",
+                "resolver": {
+                  "type": "prompt_again"
+                },
+                "next_handler": "validation_not_found_max_tries_handler"
+              },
+              {
+                "type": "not_found_max_tries",
+                "title": "validation_not_found_max_tries_handler",
+                "handler": "validation_not_found_max_tries_handler",
+                "resolver": {
+                  "type": "fallback"
+                }
+              }
+            ],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_107_1",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Sem problemas! Qual e-mail devo usar a partir de agora?"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "question": {
+              "entity": "entity_email",
+              "max_tries": 3
+            },
+            "next_step": "step_107_2"
+          },
+          {
+            "step": "step_107_2",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "continue"
+            },
+            "variable": "step_107_2",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Pronto, agora vou usar "
+                          },
+                          {
+                            "variable": "step_107_1"
+                          },
+                          {
+                            "scalar": " nas suas solicitações. 👍"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "context": {
+              "variables": [
+                {
+                  "value": {
+                    "variable": "step_107_1"
+                  },
+                  "skill_variable": "email_usuario"
+                }
+              ]
+            }
+          }
+        ],
+        "title": "Usar outro e-mail",
+        "action": "action_107",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_107_intent_1"
+        },
+        "variables": [
+          {
+            "variable": "step_107_1",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Sem problemas! Qual e-mail devo usar a partir de agora?"
+          },
+          {
+            "variable": "step_107_2",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Pronto, agora vou usar {variable} nas suas solicitações. 👍"
+          }
+        ],
+        "launch_mode": "learning",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": false,
+        "next_action": "action_201"
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_201_1",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "step_201_1",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Anunciar no ReUse leva menos de 2 minutos. **Pelo site:**\n\n1. Acesse [reuse.obrian.me](https://reuse.obrian.me) e clique em **Criar anúncio**, o botão verde no topo.\n2. Informe seu **nome** e **e-mail**. O e-mail identifica seus anúncios.\n3. Escreva um **título** claro, como \"Cadeira de escritório ergonômica\".\n4. Escolha a **categoria**: Móveis, Plantas, Bicicletas, Decoração, Eletrônicos ou Outros.\n5. Na **descrição**, conte o estado, as medidas e o que aceita em troca.\n6. Selecione o **estado de conservação** e clique em **Publicar anúncio**.\n\n**Pelo app:** toque no botão **+** no centro da barra inferior e preencha os mesmos campos.\n\n💡 Se preferir, eu publico para você aqui mesmo:"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "options": [
+                    {
+                      "label": "Quero anunciar agora",
+                      "value": {
+                        "input": {
+                          "text": "Quero anunciar agora"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Dicas para um bom anúncio",
+                      "value": {
+                        "input": {
+                          "text": "Dicas para um bom anúncio"
+                        }
+                      }
+                    }
+                  ],
+                  "response_type": "option",
+                  "repeat_on_reprompt": true
+                }
+              ]
+            }
+          }
+        ],
+        "title": "Como anunciar um item",
+        "action": "action_201",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_201_intent_1"
+        },
+        "variables": [
+          {
+            "variable": "step_201_1",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Anunciar no ReUse leva menos de 2 minutos. Pelo site: 1. Acesse "
+          }
+        ],
+        "launch_mode": "learning",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": false,
+        "next_action": "action_202"
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_202_1",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "step_202_1",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "No ReUse ninguém vende nada: as pessoas **trocam ou doam** o que não usam mais. O caminho é este:\n\n1. **Encontre** um item no catálogo, ou peça para mim: \"procurar bicicleta\".\n2. Abra o anúncio e toque em **Tenho interesse no item**.\n3. **Converse** com quem anunciou pela aba **Chat** do app e combinem a troca (ou a doação), o dia e o local.\n4. **Encontrem-se** em um lugar público e confiram o item antes de fechar.\n5. Quem anunciou **registra a troca**, que pode ser aqui comigo. O item sai do catálogo e entra na conta de impacto ambiental 🌱"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "options": [
+                    {
+                      "label": "Buscar itens",
+                      "value": {
+                        "input": {
+                          "text": "Buscar itens"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Dicas de segurança",
+                      "value": {
+                        "input": {
+                          "text": "Dicas de segurança"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Registrar uma troca",
+                      "value": {
+                        "input": {
+                          "text": "Registrar uma troca"
+                        }
+                      }
+                    }
+                  ],
+                  "response_type": "option",
+                  "repeat_on_reprompt": true
+                }
+              ]
+            }
+          }
+        ],
+        "title": "Como funciona uma troca",
+        "action": "action_202",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_202_intent_1"
+        },
+        "variables": [
+          {
+            "variable": "step_202_1",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "No ReUse ninguém vende nada: as pessoas trocam ou doam o que não"
+          }
+        ],
+        "launch_mode": "learning",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": false,
+        "next_action": "action_203"
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_203_1",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "step_203_1",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Para achar itens no ReUse:\n\n• **Por palavra**: no site, digite no campo \"Encontre itens próximos...\" e clique na lupa 🔎.\n• **Por categoria**: use os botões Todos, Móveis, Plantas, Bicicletas, Decoração e Eletrônicos, logo acima do catálogo.\n• **Perto de você**: no app, a aba **Explorar** busca pelo seu CEP e mostra o mapa da região.\n• **Comigo**: diga o que procura e eu listo os itens disponíveis com o link de cada um.\n\nSó aparecem itens **ativos**. Anúncios pausados ou já trocados ficam ocultos."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "options": [
+                    {
+                      "label": "Buscar um item agora",
+                      "value": {
+                        "input": {
+                          "text": "Buscar um item agora"
+                        }
+                      }
+                    }
+                  ],
+                  "response_type": "option",
+                  "repeat_on_reprompt": true
+                }
+              ]
+            }
+          }
+        ],
+        "title": "Como buscar e filtrar itens",
+        "action": "action_203",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_203_intent_1"
+        },
+        "variables": [
+          {
+            "variable": "step_203_1",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Para achar itens no ReUse: • Por palavra: no site, digite no cam"
+          }
+        ],
+        "launch_mode": "learning",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": false,
+        "next_action": "action_204"
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_204_1",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "step_204_1",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Escolha o estado com sinceridade. Isso evita frustração na hora da troca:\n\n• **Novo**: nunca usado, ou ainda na embalagem.\n• **Excelente**: usado poucas vezes, sem marcas visíveis.\n• **Bom**: tem sinais normais de uso, mas funciona perfeitamente.\n• **Regular**: tem marcas, desgaste ou pequenos defeitos. Descreva todos no anúncio.\n\nNa dúvida, escolha o estado mais baixo e explique os detalhes na descrição."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            }
+          }
+        ],
+        "title": "Estados de conservação",
+        "action": "action_204",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_204_intent_1"
+        },
+        "variables": [
+          {
+            "variable": "step_204_1",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Escolha o estado com sinceridade. Isso evita frustração na hora "
+          }
+        ],
+        "launch_mode": "learning",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": false,
+        "next_action": "action_205"
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_205_1",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "step_205_1",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Anúncios completos são trocados mais rápido:\n\n1. **Título específico**: \"Bicicleta aro 26 com marchas\" funciona melhor que \"Bicicleta\".\n2. **Descrição honesta**: medidas, tempo de uso, defeitos e o que vem junto (cabos, manual, capa...).\n3. **Diga o que aceita em troca**, ou se é doação.\n4. **Fotos com luz natural** e fundo limpo, mostrando detalhes e defeitos (no app dá para enviar até 10 fotos).\n5. **Responda rápido** no chat: quem demora perde a troca 😉"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "options": [
+                    {
+                      "label": "Quero anunciar agora",
+                      "value": {
+                        "input": {
+                          "text": "Quero anunciar agora"
+                        }
+                      }
+                    }
+                  ],
+                  "response_type": "option",
+                  "repeat_on_reprompt": true
+                }
+              ]
+            }
+          }
+        ],
+        "title": "Dicas para um bom anúncio",
+        "action": "action_205",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_205_intent_1"
+        },
+        "variables": [
+          {
+            "variable": "step_205_1",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Anúncios completos são trocados mais rápido: 1. Título específic"
+          }
+        ],
+        "launch_mode": "learning",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": false,
+        "next_action": "action_206"
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_206_1",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "step_206_1",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "O ReUse é feito para **trocar ou doar objetos em condição de uso**: móveis, plantas, bicicletas, decoração, eletrônicos e outros itens do dia a dia.\n\n**Não é permitido anunciar:**\n• venda por dinheiro ou prestação de serviços;\n• alimentos, medicamentos, cosméticos abertos ou produtos vencidos;\n• animais;\n• armas, itens ilegais, falsificados ou de origem duvidosa;\n• itens quebrados sem conserto (para esses, procure um ponto de reciclagem ♻️).\n\nAnúncios fora das regras podem ser removidos pela moderação."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            }
+          }
+        ],
+        "title": "O que posso anunciar",
+        "action": "action_206",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_206_intent_1"
+        },
+        "variables": [
+          {
+            "variable": "step_206_1",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "O ReUse é feito para trocar ou doar objetos em condição de uso: "
+          }
+        ],
+        "launch_mode": "learning",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": false,
+        "next_action": "action_207"
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_207_1",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "step_207_1",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Algumas dicas para trocar com tranquilidade:\n\n• Combine o encontro em um **local público e movimentado**, de preferência de dia.\n• Se puder, **vá acompanhado** e avise alguém do horário.\n• **Confira o item** antes de concluir: ligue eletrônicos e teste as partes móveis.\n• Mantenha a conversa no **chat do ReUse**, assim tudo fica registrado.\n• **Nunca envie dinheiro nem dados pessoais** (documentos, senhas, cartões). Trocas no ReUse não envolvem pagamento.\n• Desconfie de propostas apressadas ou boas demais."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            }
+          }
+        ],
+        "title": "Dicas de segurança",
+        "action": "action_207",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_207_intent_1"
+        },
+        "variables": [
+          {
+            "variable": "step_207_1",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Algumas dicas para trocar com tranquilidade: • Combine o encontr"
+          }
+        ],
+        "launch_mode": "learning",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": false,
+        "next_action": "action_208"
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_208_1",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "step_208_1",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Você controla a visibilidade dos seus anúncios:\n\n• **Pausar**: o item sai do catálogo, mas o anúncio fica guardado. Bom para quando você vai viajar ou já está negociando.\n• **Reativar**: o item volta para o catálogo do jeito que estava.\n• **Trocado**: registre quando a troca acontecer. O item sai do catálogo de vez e entra na sua conta de impacto 🌱\n\nEu faço isso por você agora mesmo:"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "options": [
+                    {
+                      "label": "Pausar minhas ofertas",
+                      "value": {
+                        "input": {
+                          "text": "Pausar minhas ofertas"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Reativar minhas ofertas",
+                      "value": {
+                        "input": {
+                          "text": "Reativar minhas ofertas"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Registrar uma troca",
+                      "value": {
+                        "input": {
+                          "text": "Registrar uma troca"
+                        }
+                      }
+                    }
+                  ],
+                  "response_type": "option",
+                  "repeat_on_reprompt": true
+                }
+              ]
+            }
+          }
+        ],
+        "title": "Pausar, reativar ou encerrar anúncios",
+        "action": "action_208",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_208_intent_1"
+        },
+        "variables": [
+          {
+            "variable": "step_208_1",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Você controla a visibilidade dos seus anúncios: • Pausar: o item"
+          }
+        ],
+        "launch_mode": "learning",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": false,
+        "next_action": "action_209"
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_209_1",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "step_209_1",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "• **No app**: na tela de acesso, toque em **Cadastrar** e informe nome, e-mail e senha. Depois é só usar **Entrar** com os mesmos dados.\n• **No site**: não precisa de senha. O seu **e-mail** identifica seus anúncios, então use sempre o mesmo ao anunciar e ao falar comigo."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "options": [
+                    {
+                      "label": "Anunciar um item",
+                      "value": {
+                        "input": {
+                          "text": "Anunciar um item"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Meus anúncios",
+                      "value": {
+                        "input": {
+                          "text": "Meus anúncios"
+                        }
+                      }
+                    }
+                  ],
+                  "response_type": "option",
+                  "repeat_on_reprompt": true
+                }
+              ]
+            }
+          }
+        ],
+        "title": "Conta e cadastro",
+        "action": "action_209",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_209_intent_1"
+        },
+        "variables": [
+          {
+            "variable": "step_209_1",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "• No app: na tela de acesso, toque em Cadastrar e informe nome, "
+          }
+        ],
+        "launch_mode": "learning",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": false,
+        "next_action": "action_210"
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_210_1",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "step_210_1",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Cada objeto reaproveitado é um objeto a menos sendo fabricado e descartado. No ReUse estimamos **cerca de 14,5 kg de CO₂ evitados por item reaproveitado**. O número aparece no banner da página inicial e em cada anúncio.\n\nNo app você também acumula **pontos** ao publicar e concluir trocas, e acompanha tudo na aba **Perfil**.\n\nTrocar em vez de comprar economiza dinheiro, reduz lixo e fortalece a comunidade da sua região 💚"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            }
+          }
+        ],
+        "title": "Impacto ambiental e pontos",
+        "action": "action_210",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_210_intent_1"
+        },
+        "variables": [
+          {
+            "variable": "step_210_1",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Cada objeto reaproveitado é um objeto a menos sendo fabricado e "
+          }
+        ],
+        "launch_mode": "learning",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": false,
+        "next_action": "action_211"
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_211_1",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "step_211_1",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "**Tarefas que eu faço por você:**\n• anunciar um item\n• buscar itens disponíveis\n• listar seus anúncios\n• pausar ou reativar suas ofertas\n• registrar uma troca\n• trocar o e-mail da conversa\n\n**Dúvidas que eu respondo:**\n• como anunciar e dicas de anúncio\n• como funciona uma troca\n• busca e filtros\n• estados de conservação\n• o que pode ser anunciado\n• segurança na troca\n• conta e cadastro\n• impacto ambiental e pontos"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "options": [
+                    {
+                      "label": "Anunciar um item",
+                      "value": {
+                        "input": {
+                          "text": "Anunciar um item"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Buscar itens",
+                      "value": {
+                        "input": {
+                          "text": "Buscar itens"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Meus anúncios",
+                      "value": {
+                        "input": {
+                          "text": "Meus anúncios"
+                        }
+                      }
+                    },
+                    {
+                      "label": "O que você sabe fazer?",
+                      "value": {
+                        "input": {
+                          "text": "O que você sabe fazer?"
+                        }
+                      }
+                    }
+                  ],
+                  "response_type": "option",
+                  "repeat_on_reprompt": true
+                }
+              ]
+            }
+          }
+        ],
+        "title": "O que o assistente sabe fazer",
+        "action": "action_211",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_211_intent_1"
+        },
+        "variables": [
+          {
+            "variable": "step_211_1",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Tarefas que eu faço por você: • anunciar um item • buscar itens "
+          }
+        ],
+        "launch_mode": "learning",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": false,
+        "next_action": "action_212"
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_212_1",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "step_212_1",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Por nada! 💚 Sempre que precisar, é só chamar. Boas trocas!"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            }
+          }
+        ],
+        "title": "Agradecimento",
+        "action": "action_212",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "action_212_intent_1"
+        },
+        "variables": [
+          {
+            "variable": "step_212_1",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Por nada! 💚 Sempre que precisar, é só chamar. Boas trocas!"
+          }
+        ],
+        "launch_mode": "learning",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": false,
+        "next_action": "fallback"
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_fallback_1",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "step_fallback_1",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Parece que não estou conseguindo te ajudar com isso 😕 Ainda não temos atendimento humano pelo chat. Você pode reformular a pergunta ou escolher um dos assuntos que eu domino:"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "options": [
+                    {
+                      "label": "Anunciar um item",
+                      "value": {
+                        "input": {
+                          "text": "Anunciar um item"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Buscar itens",
+                      "value": {
+                        "input": {
+                          "text": "Buscar itens"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Meus anúncios",
+                      "value": {
+                        "input": {
+                          "text": "Meus anúncios"
+                        }
+                      }
+                    },
+                    {
+                      "label": "O que você sabe fazer?",
+                      "value": {
+                        "input": {
+                          "text": "O que você sabe fazer?"
+                        }
+                      }
+                    }
+                  ],
+                  "response_type": "option",
+                  "repeat_on_reprompt": true
+                }
+              ]
+            }
+          }
+        ],
+        "title": "Ajuda extra",
+        "action": "fallback",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "intent": "fallback_connect_to_agent"
+        },
+        "variables": [
+          {
+            "variable": "step_fallback_1",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Parece que não estou conseguindo te ajudar com isso 😕 Ainda não "
+          }
+        ],
+        "launch_mode": "learning",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": true,
+        "next_action": "run_always"
+      },
+      {
+        "action": "run_always",
+        "boosts": [],
+        "handlers": [],
+        "steps": [
+          {
+            "condition": {
+              "entity": "danger_words"
+            },
+            "handlers": [],
+            "next_step": "profanity_detected",
+            "resolver": {
+              "type": "fallback"
+            },
+            "step": "danger_word_detected",
+            "title": "Connect to agent",
+            "type": "standard",
+            "variable": "danger_word_detected_variable"
+          },
+          {
+            "condition": {
+              "entity": "profane_words"
+            },
+            "handlers": [
+              {
+                "type": "max_hits",
+                "handler": "max_hits_handler",
+                "resolver": {
+                  "type": "fallback"
+                }
+              }
+            ],
+            "max_hits": 2,
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Use o idioma apropriado ao interagir com o assistente."
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "resolver": {
+              "type": "end_action"
+            },
+            "step": "profanity_detected",
+            "title": "Show warning",
+            "type": "standard",
+            "variable": "profanity_detected_variable"
+          }
+        ],
+        "title": "Trigger word detected",
+        "type": "standard",
+        "variables": [
+          {
+            "data_type": "any",
+            "title": "Profanity detected",
+            "variable": "danger_word_detected_variable"
+          },
+          {
+            "data_type": "any",
+            "title": "Profane word detected",
+            "variable": "profanity_detected_variable"
+          }
+        ],
+        "next_action": "anything_else"
+      },
+      {
+        "type": "standard",
+        "steps": [
+          {
+            "step": "step_anything_else_1",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "end_action"
+            },
+            "variable": "step_anything_else_1",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": "Hmm, não entendi 🤔 Tente com outras palavras ou escolha uma das opções:"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                },
+                {
+                  "options": [
+                    {
+                      "label": "Anunciar um item",
+                      "value": {
+                        "input": {
+                          "text": "Anunciar um item"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Buscar itens",
+                      "value": {
+                        "input": {
+                          "text": "Buscar itens"
+                        }
+                      }
+                    },
+                    {
+                      "label": "Meus anúncios",
+                      "value": {
+                        "input": {
+                          "text": "Meus anúncios"
+                        }
+                      }
+                    },
+                    {
+                      "label": "O que você sabe fazer?",
+                      "value": {
+                        "input": {
+                          "text": "O que você sabe fazer?"
+                        }
+                      }
+                    }
+                  ],
+                  "response_type": "option",
+                  "repeat_on_reprompt": true
+                }
+              ]
+            },
+            "condition": {
+              "lte": [
+                {
+                  "system_variable": "no_action_matches_count"
+                },
+                {
+                  "scalar": 3
+                }
+              ]
+            },
+            "next_step": "step_anything_else_2"
+          },
+          {
+            "step": "step_anything_else_2",
+            "type": "standard",
+            "handlers": [],
+            "resolver": {
+              "type": "invoke_another_action_and_end",
+              "invoke_action": {
+                "action": "fallback",
+                "policy": "default",
+                "parameters": null,
+                "result_variable": "step_anything_else_2_result_1"
+              }
+            },
+            "variable": "step_anything_else_2",
+            "output": {
+              "generic": [
+                {
+                  "values": [
+                    {
+                      "text_expression": {
+                        "concat": [
+                          {
+                            "scalar": ""
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "response_type": "text",
+                  "selection_policy": "sequential"
+                }
+              ]
+            },
+            "condition": {
+              "gt": [
+                {
+                  "system_variable": "no_action_matches_count"
+                },
+                {
+                  "scalar": 3
+                }
+              ]
+            }
+          }
+        ],
+        "title": "Não entendi",
+        "action": "anything_else",
+        "boosts": [],
+        "handlers": [],
+        "condition": {
+          "expression": "anything_else"
+        },
+        "variables": [
+          {
+            "variable": "step_anything_else_1",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            },
+            "title": "Hmm, não entendi 🤔 Tente com outras palavras ou escolha uma das "
+          },
+          {
+            "variable": "step_anything_else_2",
+            "data_type": "any",
+            "privacy": {
+              "enabled": false
+            }
+          }
+        ],
+        "launch_mode": "learning",
+        "topic_switch": {
+          "allowed_from": true,
+          "allowed_into": true,
+          "never_return": false
+        },
+        "disambiguation_opt_out": true
+      }
+    ],
+    "intents": [
+      {
+        "intent": "fallback_connect_to_agent",
+        "examples": [
+          {
+            "text": "Preciso contatar a um atendente"
+          },
+          {
+            "text": "Você pode me conectar com uma pessoa real?"
+          },
+          {
+            "text": "Eu vou falar com um agente/ Eu vou falar com um agente de suporte."
+          },
+          {
+            "text": "Por favor, você pode entrar em contato comigo com um agente humano?"
+          },
+          {
+            "text": "Eu quero contatar um agente/Eu quero entrar em contato com um agente"
+          }
+        ],
+        "description": "Solicite um agente humano."
+      },
+      {
+        "intent": "action_101_intent_1",
+        "examples": [
+          {
+            "text": "quero pausar minhas ofertas ativas"
+          },
+          {
+            "text": "Pausar minhas ofertas"
+          },
+          {
+            "text": "pausar meus anúncios"
+          },
+          {
+            "text": "tira meus itens do ar"
+          },
+          {
+            "text": "vou viajar, pausa todos os meus anúncios"
+          },
+          {
+            "text": "desativar minhas ofertas"
+          },
+          {
+            "text": "suspender meus anúncios por um tempo"
+          }
+        ]
+      },
+      {
+        "intent": "action_102_intent_1",
+        "examples": [
+          {
+            "text": "Reativar minhas ofertas"
+          },
+          {
+            "text": "quero reativar meus anúncios"
+          },
+          {
+            "text": "voltar minhas ofertas para o catálogo"
+          },
+          {
+            "text": "despausar meus itens"
+          },
+          {
+            "text": "colocar meus anúncios no ar de novo"
+          },
+          {
+            "text": "ativar minhas ofertas pausadas"
+          }
+        ]
+      },
+      {
+        "intent": "action_103_intent_1",
+        "examples": [
+          {
+            "text": "Meus anúncios"
+          },
+          {
+            "text": "quais itens eu anunciei?"
+          },
+          {
+            "text": "ver minhas ofertas"
+          },
+          {
+            "text": "qual o status dos meus anúncios"
+          },
+          {
+            "text": "listar meus itens"
+          },
+          {
+            "text": "o que eu tenho publicado?"
+          }
+        ]
+      },
+      {
+        "intent": "action_104_intent_1",
+        "examples": [
+          {
+            "text": "Anunciar um item"
+          },
+          {
+            "text": "quero anunciar um item"
+          },
+          {
+            "text": "publicar um anúncio"
+          },
+          {
+            "text": "quero doar um objeto"
+          },
+          {
+            "text": "cadastrar um item para troca"
+          },
+          {
+            "text": "quero trocar uma coisa que não uso mais"
+          },
+          {
+            "text": "Quero anunciar agora"
+          }
+        ]
+      },
+      {
+        "intent": "action_105_intent_1",
+        "examples": [
+          {
+            "text": "Registrar uma troca"
+          },
+          {
+            "text": "já troquei meu item"
+          },
+          {
+            "text": "marcar item como trocado"
+          },
+          {
+            "text": "finalizei uma troca"
+          },
+          {
+            "text": "meu item já foi doado"
+          },
+          {
+            "text": "concluí a troca da minha bicicleta"
+          }
+        ]
+      },
+      {
+        "intent": "action_106_intent_1",
+        "examples": [
+          {
+            "text": "Buscar itens"
+          },
+          {
+            "text": "procurar uma bicicleta"
+          },
+          {
+            "text": "tem cadeira disponível?"
+          },
+          {
+            "text": "quero encontrar um monitor"
+          },
+          {
+            "text": "estou procurando móveis"
+          },
+          {
+            "text": "vocês têm plantas?"
+          },
+          {
+            "text": "Buscar um item agora"
+          }
+        ]
+      },
+      {
+        "intent": "action_107_intent_1",
+        "examples": [
+          {
+            "text": "usar outro e-mail"
+          },
+          {
+            "text": "quero trocar o e-mail"
+          },
+          {
+            "text": "esse não é meu e-mail"
+          },
+          {
+            "text": "mudar a conta"
+          },
+          {
+            "text": "errei meu e-mail"
+          }
+        ]
+      },
+      {
+        "intent": "action_201_intent_1",
+        "examples": [
+          {
+            "text": "como cadastrar um novo item para troca?"
+          },
+          {
+            "text": "como anuncio um objeto"
+          },
+          {
+            "text": "como faço para publicar um anúncio"
+          },
+          {
+            "text": "como coloco um item para doação"
+          },
+          {
+            "text": "passo a passo para anunciar"
+          },
+          {
+            "text": "como divulgo algo que não uso mais"
+          }
+        ]
+      },
+      {
+        "intent": "action_202_intent_1",
+        "examples": [
+          {
+            "text": "Como funciona uma troca?"
+          },
+          {
+            "text": "como faço uma troca"
+          },
+          {
+            "text": "como consigo um item anunciado"
+          },
+          {
+            "text": "como negociar com outro usuário"
+          },
+          {
+            "text": "quero pegar um item, o que faço"
+          },
+          {
+            "text": "o reuse é para vender?"
+          }
+        ]
+      },
+      {
+        "intent": "action_203_intent_1",
+        "examples": [
+          {
+            "text": "como encontro itens perto de mim"
+          },
+          {
+            "text": "como pesquisar um objeto"
+          },
+          {
+            "text": "como filtrar por categoria"
+          },
+          {
+            "text": "onde vejo os itens disponíveis"
+          },
+          {
+            "text": "como usar a busca do site"
+          }
+        ]
+      },
+      {
+        "intent": "action_204_intent_1",
+        "examples": [
+          {
+            "text": "qual estado de conservação devo escolher"
+          },
+          {
+            "text": "o que significa estado bom"
+          },
+          {
+            "text": "diferença entre excelente e bom"
+          },
+          {
+            "text": "como classifico o estado do meu item"
+          },
+          {
+            "text": "o que é estado regular"
+          }
+        ]
+      },
+      {
+        "intent": "action_205_intent_1",
+        "examples": [
+          {
+            "text": "Dicas para um bom anúncio"
+          },
+          {
+            "text": "como faço meu anúncio chamar atenção"
+          },
+          {
+            "text": "como escrever a descrição do item"
+          },
+          {
+            "text": "como tirar boas fotos do item"
+          },
+          {
+            "text": "meu anúncio não tem interessados"
+          }
+        ]
+      },
+      {
+        "intent": "action_206_intent_1",
+        "examples": [
+          {
+            "text": "o que posso anunciar"
+          },
+          {
+            "text": "posso anunciar roupas?"
+          },
+          {
+            "text": "o que é proibido anunciar"
+          },
+          {
+            "text": "posso vender no reuse?"
+          },
+          {
+            "text": "quais são as regras da plataforma"
+          }
+        ]
+      },
+      {
+        "intent": "action_207_intent_1",
+        "examples": [
+          {
+            "text": "Dicas de segurança"
+          },
+          {
+            "text": "é seguro trocar com desconhecidos?"
+          },
+          {
+            "text": "onde encontrar a pessoa para trocar"
+          },
+          {
+            "text": "como evitar golpes"
+          },
+          {
+            "text": "cuidados na hora da troca"
+          }
+        ]
+      },
+      {
+        "intent": "action_208_intent_1",
+        "examples": [
+          {
+            "text": "como pausar um anúncio"
+          },
+          {
+            "text": "como tiro meu item do ar"
+          },
+          {
+            "text": "como excluir um anúncio"
+          },
+          {
+            "text": "vou viajar, o que faço com meus anúncios"
+          },
+          {
+            "text": "como reativar um anúncio pausado"
+          }
+        ]
+      },
+      {
+        "intent": "action_209_intent_1",
+        "examples": [
+          {
+            "text": "como criar uma conta"
+          },
+          {
+            "text": "como me cadastro"
+          },
+          {
+            "text": "como faço login"
+          },
+          {
+            "text": "preciso de conta para anunciar?"
+          },
+          {
+            "text": "como entro no aplicativo"
+          }
+        ]
+      },
+      {
+        "intent": "action_210_intent_1",
+        "examples": [
+          {
+            "text": "o que é a economia de CO2"
+          },
+          {
+            "text": "como funciona a métrica de carbono"
+          },
+          {
+            "text": "qual o impacto de trocar um item"
+          },
+          {
+            "text": "o que são os pontos do app"
+          },
+          {
+            "text": "por que reutilizar é importante"
+          }
+        ]
+      },
+      {
+        "intent": "action_211_intent_1",
+        "examples": [
+          {
+            "text": "O que você sabe fazer?"
+          },
+          {
+            "text": "ajuda"
+          },
+          {
+            "text": "menu"
+          },
+          {
+            "text": "quais são as opções"
+          },
+          {
+            "text": "como você pode me ajudar"
+          }
+        ]
+      },
+      {
+        "intent": "action_212_intent_1",
+        "examples": [
+          {
+            "text": "obrigado"
+          },
+          {
+            "text": "valeu"
+          },
+          {
+            "text": "muito obrigada"
+          },
+          {
+            "text": "ajudou demais"
+          },
+          {
+            "text": "tchau"
+          }
+        ]
+      }
+    ],
+    "entities": [
+      {
+        "entity": "profane_words",
+        "values": [],
+        "fuzzy_match": false
+      },
+      {
+        "entity": "danger_words",
+        "values": [],
+        "fuzzy_match": false
+      },
+      {
+        "entity": "sys-number",
+        "values": []
+      },
+      {
+        "entity": "sys-yes-no",
+        "values": []
+      },
+      {
+        "entity": "entity_email",
+        "values": [
+          {
+            "type": "patterns",
+            "value": "email",
+            "patterns": [
+              "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\b"
+            ]
+          }
+        ],
+        "fuzzy_match": false
+      },
+      {
+        "entity": "entity_categoria",
+        "values": [
+          {
+            "type": "synonyms",
+            "value": "Móveis",
+            "synonyms": [
+              "moveis",
+              "móvel",
+              "movel",
+              "cadeira",
+              "mesa",
+              "sofá",
+              "sofa",
+              "armário",
+              "estante",
+              "cama"
+            ]
+          },
+          {
+            "type": "synonyms",
+            "value": "Plantas",
+            "synonyms": [
+              "planta",
+              "muda",
+              "vaso de planta",
+              "suculenta",
+              "flores"
+            ]
+          },
+          {
+            "type": "synonyms",
+            "value": "Bicicletas",
+            "synonyms": [
+              "bicicleta",
+              "bike",
+              "bikes",
+              "patinete"
+            ]
+          },
+          {
+            "type": "synonyms",
+            "value": "Decoração",
+            "synonyms": [
+              "decoracao",
+              "decoração",
+              "enfeite",
+              "quadro",
+              "vaso",
+              "luminária"
+            ]
+          },
+          {
+            "type": "synonyms",
+            "value": "Eletrônicos",
+            "synonyms": [
+              "eletronicos",
+              "eletrônico",
+              "eletronico",
+              "celular",
+              "monitor",
+              "notebook",
+              "tv",
+              "som"
+            ]
+          },
+          {
+            "type": "synonyms",
+            "value": "Outros",
+            "synonyms": [
+              "outro",
+              "outra coisa",
+              "roupa",
+              "livro",
+              "brinquedo"
+            ]
+          }
+        ],
+        "fuzzy_match": true
+      },
+      {
+        "entity": "entity_estado",
+        "values": [
+          {
+            "type": "synonyms",
+            "value": "Novo",
+            "synonyms": [
+              "nunca usado",
+              "lacrado",
+              "na caixa"
+            ]
+          },
+          {
+            "type": "synonyms",
+            "value": "Excelente",
+            "synonyms": [
+              "seminovo",
+              "quase novo",
+              "ótimo",
+              "otimo"
+            ]
+          },
+          {
+            "type": "synonyms",
+            "value": "Bom",
+            "synonyms": [
+              "usado",
+              "bom estado",
+              "funcionando"
+            ]
+          },
+          {
+            "type": "synonyms",
+            "value": "Regular",
+            "synonyms": [
+              "com defeito",
+              "gasto",
+              "desgastado",
+              "marcas de uso"
+            ]
+          }
+        ],
+        "fuzzy_match": true
+      }
+    ],
+    "metadata": {
+      "api_version": {
+        "major_version": "v2",
+        "minor_version": "2018-11-08"
+      },
+      "skill": {
+        "counts": {
+          "actions": 23,
+          "intents": 20,
+          "entities": 7,
+          "data_types": 0,
+          "collections": 0,
+          "global_variables": 1
+        }
+      }
+    },
+    "variables": [
+      {
+        "title": "email_usuario",
+        "privacy": {
+          "enabled": true
+        },
+        "variable": "email_usuario",
+        "data_type": "string",
+        "description": "E-mail da conta ReUse informado pelo usuário na conversa"
+      }
+    ],
+    "data_types": [],
+    "collections": [],
+    "counterexamples": [],
+    "system_settings": {
+      "auto_learn": {
+        "apply": true
+      },
+      "disambiguation": {
+        "enabled": true,
+        "max_suggestions": 5,
+        "none_of_the_above_prompt": "Nenhum dos itens acima",
+        "prompt": "Você quis dizer:",
+        "randomize": true,
+        "single_answer_clarification_prompt": "Outra coisa",
+        "suggestion_text_policy": "title",
+        "use_connect_to_support_prompt": "conectar ao suporte"
+      },
+      "search_routing": {
+        "target": "conversational_search"
+      },
+      "topic_switch": {
+        "enabled": true,
+        "max_tries": 3,
+        "messages": {
+          "enable_confirmation": true,
+          "confirmation_failure": {
+            "generic": [
+              {
+                "values": [
+                  {
+                    "text_expression": {
+                      "concat": [
+                        {
+                          "scalar": "Desculpe, não entendi, confirme, por favor."
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "response_type": "text",
+                "selection_policy": "sequential"
+              }
+            ]
+          },
+          "confirmation_request": {
+            "generic": [
+              {
+                "values": [
+                  {
+                    "text_expression": {
+                      "concat": [
+                        {
+                          "scalar": "Deseja continuar com o tópico anterior: "
+                        },
+                        {
+                          "system_variable": "digressed_from"
+                        },
+                        {
+                          "scalar": "?"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "response_type": "text",
+                "selection_policy": "sequential"
+              },
+              {
+                "options": [
+                  {
+                    "label": "Sim",
+                    "value": {
+                      "input": {
+                        "text": "Sim"
+                      }
+                    }
+                  },
+                  {
+                    "label": "Não",
+                    "value": {
+                      "input": {
+                        "text": "Não"
+                      }
+                    }
+                  }
+                ],
+                "response_type": "option",
+                "repeat_on_reprompt": true
+              }
+            ]
+          }
+        }
+      },
+      "variable": {
+        "format": {
+          "currency": {
+            "fraction_digits": 2
+          },
+          "time": {
+            "pattern": "short"
+          }
+        }
+      }
+    },
+    "learning_opt_out": true,
+    "language": "pt-br"
+  },
+  "description": "created for assistant 87a3fd47-f4e4-4baf-af50-42300dd42da9",
+  "assistant_id": "87a3fd47-f4e4-4baf-af50-42300dd42da9",
+  "workspace_id": "736c00b1-3384-40c3-81a6-447acaa56354",
+  "dialog_settings": {},
+  "next_snapshot_version": "1",
+  "environment_id": "370e19be-ab6d-4ce8-ae9a-af4a475b9a38",
+  "counts": {
+    "actions": 23,
+    "intents": 20,
+    "entities": 7,
+    "data_types": 0,
+    "collections": 0,
+    "global_variables": 1
+  }
+}
