@@ -51,12 +51,14 @@ export default async function ItemDetailPage({ params }: ItemPageProps) {
   let item: any = null;
 
   try {
-    item = await db.orm.public.Item.findUnique({
-      where: { id },
-    });
+     const itens = await db.orm.public.Item
+      .where({ id: Number(id) })
+      .all();
+
+    item = itens[0] ?? null;
   } catch (error) {
-    item = ITENS_PADRAO.find((i) => i.id === id);
-  }
+  console.error("Erro ao consultar o produto:", error);
+}
 
   if (!item) {
     notFound();
