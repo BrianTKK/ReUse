@@ -26,7 +26,11 @@ export default async function WatsonChat() {
     <Script id="watson-web-chat" strategy="afterInteractive">
       {`
         window.watsonAssistantChatOptions = Object.assign(${options}, {
-          onLoad: async (instance) => { await instance.render(); },
+          // Textos do widget (campo de digitação, horários) em português
+          onLoad: async (instance) => {
+            await instance.updateLocale("pt-br");
+            await instance.render();
+          },
         });
         const script = document.createElement("script");
         script.src = "https://web-chat.global.assistant.watson.appdomain.cloud/versions/latest/WatsonAssistantChatEntry.js";

@@ -6,7 +6,7 @@ Chatbot da plataforma ReUse! criado no **IBM watsonx Assistant** (nova experiên
 2. **Orientar o usuário**: respostas com passo a passo sobre como anunciar, como funciona uma troca, busca, regras, segurança e mais.
 
 - Plataforma publicada: https://reuse.obrian.me
-- Atividade 02 da Fase 4 (FIAP, 2º ano): *ReUse com voz: criando um assistente virtual com IBM Watson*
+- Atividade 02 da Fase 6 (FIAP, 2º ano): *ReUse com voz: criando um assistente virtual com IBM Watson*
 
 ## Arquitetura
 
