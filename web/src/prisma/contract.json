@@ -16,6 +16,25 @@
   "domain": {
     "namespaces": {
       "public": {
+        "enum": {
+          "ItemStatus": {
+            "codecId": "pg/text@1",
+            "members": [
+              {
+                "name": "active",
+                "value": "active"
+              },
+              {
+                "name": "paused",
+                "value": "paused"
+              },
+              {
+                "name": "traded",
+                "value": "traded"
+              }
+            ]
+          }
+        },
         "models": {
           "Item": {
             "fields": {
@@ -66,6 +85,19 @@
                 "type": {
                   "codecId": "pg/text@1",
                   "kind": "scalar"
+                }
+              },
+              "status": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                },
+                "valueSet": {
+                  "entityKind": "enum",
+                  "entityName": "ItemStatus",
+                  "namespaceId": "public",
+                  "plane": "domain"
                 }
               },
               "title": {
@@ -129,6 +161,9 @@
                 },
                 "image": {
                   "column": "image"
+                },
+                "status": {
+                  "column": "status"
                 },
                 "title": {
                   "column": "title"
@@ -231,6 +266,13 @@
         "entries": {
           "table": {
             "item": {
+              "checks": [
+                {
+                  "expression": "\"status\" IN ('active', 'paused', 'traded')",
+                  "name": "item_status_check_c1eb2d3c",
+                  "prefix": "item_status_check"
+                }
+              ],
               "columns": {
                 "category": {
                   "codecId": "pg/text@1",
@@ -274,6 +316,21 @@
                   "codecId": "pg/text@1",
                   "nativeType": "text",
                   "nullable": true
+                },
+                "status": {
+                  "codecId": "pg/text@1",
+                  "default": {
+                    "kind": "literal",
+                    "value": "active"
+                  },
+                  "nativeType": "text",
+                  "nullable": false,
+                  "valueSet": {
+                    "entityKind": "valueSet",
+                    "entityName": "ItemStatus",
+                    "namespaceId": "public",
+                    "plane": "storage"
+                  }
                 },
                 "title": {
                   "codecId": "pg/text@1",
@@ -377,13 +434,23 @@
                 }
               ]
             }
+          },
+          "valueSet": {
+            "ItemStatus": {
+              "kind": "valueSet",
+              "values": [
+                "active",
+                "paused",
+                "traded"
+              ]
+            }
           }
         },
         "id": "public",
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "b111f41b057646ee8c68f15d9c9a16c750449ceff2a3faa5837bc61a2279b2b6"
+    "storageHash": "74cb36e350bcb04a502666c7bd4943842b9f3dcbdefe0e3f2fb492034d78d722"
   },
   "execution": {
     "executionHash": "f9ffa8465c91986623a388277b055ce4bd7aaf5dffa39620b4688554b0e75be0",

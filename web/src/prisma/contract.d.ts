@@ -33,7 +33,7 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'b111f41b057646ee8c68f15d9c9a16c750449ceff2a3faa5837bc61a2279b2b6'>;
+  StorageHashBase<'74cb36e350bcb04a502666c7bd4943842b9f3dcbdefe0e3f2fb492034d78d722'>;
 export type ExecutionHash =
   ExecutionHashBase<'f9ffa8465c91986623a388277b055ce4bd7aaf5dffa39620b4688554b0e75be0'>;
 export type ProfileHash =
@@ -249,6 +249,7 @@ export type FieldOutputTypes = {
       readonly condition: CodecTypes['pg/text@1']['output'];
       readonly image: CodecTypes['pg/text@1']['output'] | null;
       readonly city: CodecTypes['pg/text@1']['output'];
+      readonly status: 'active' | 'paused' | 'traded';
       readonly userId: CodecTypes['pg/int4@1']['output'] | null;
       readonly createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
@@ -272,6 +273,7 @@ export type FieldInputTypes = {
       readonly condition: CodecTypes['pg/text@1']['input'];
       readonly image: CodecTypes['pg/text@1']['input'] | null;
       readonly city: CodecTypes['pg/text@1']['input'];
+      readonly status: 'active' | 'paused' | 'traded';
       readonly userId: CodecTypes['pg/int4@1']['input'] | null;
       readonly createdAt: CodecTypes['pg/timestamptz-string@1']['input'];
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['input'];
@@ -295,6 +297,7 @@ export type StorageColumnTypes = {
       readonly description: CodecTypes['pg/text@1']['output'];
       readonly id: CodecTypes['pg/int4@1']['output'];
       readonly image: CodecTypes['pg/text@1']['output'] | null;
+      readonly status: 'active' | 'paused' | 'traded';
       readonly title: CodecTypes['pg/text@1']['output'];
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
       readonly userId: CodecTypes['pg/int4@1']['output'] | null;
@@ -318,6 +321,7 @@ export type StorageColumnInputTypes = {
       readonly description: CodecTypes['pg/text@1']['input'];
       readonly id: CodecTypes['pg/int4@1']['input'];
       readonly image: CodecTypes['pg/text@1']['input'] | null;
+      readonly status: 'active' | 'paused' | 'traded';
       readonly title: CodecTypes['pg/text@1']['input'];
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['input'];
       readonly userId: CodecTypes['pg/int4@1']['input'] | null;
@@ -389,6 +393,15 @@ type ContractBase = Omit<
                   readonly nativeType: 'text';
                   readonly codecId: 'pg/text@1';
                   readonly nullable: false;
+                };
+                readonly status: {
+                  readonly nativeType: 'text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                  readonly default: {
+                    readonly kind: 'literal';
+                    readonly value: DefaultLiteralValue<'pg/text@1', 'active'>;
+                  };
                 };
                 readonly userId: {
                   readonly nativeType: 'int4';
@@ -471,6 +484,12 @@ type ContractBase = Omit<
               foreignKeys: readonly [];
             };
           };
+          readonly valueSet: {
+            readonly ItemStatus: {
+              readonly kind: 'valueSet';
+              readonly values: readonly ['active', 'paused', 'traded'];
+            };
+          };
         };
       };
     };
@@ -518,6 +537,10 @@ type ContractBase = Omit<
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
+              readonly status: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
               readonly userId: {
                 readonly nullable: true;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
@@ -558,6 +581,7 @@ type ContractBase = Omit<
                 readonly condition: { readonly column: 'condition' };
                 readonly image: { readonly column: 'image' };
                 readonly city: { readonly column: 'city' };
+                readonly status: { readonly column: 'status' };
                 readonly userId: { readonly column: 'userId' };
                 readonly createdAt: { readonly column: 'createdAt' };
                 readonly updatedAt: { readonly column: 'updatedAt' };
@@ -614,6 +638,16 @@ type ContractBase = Omit<
                 readonly updatedAt: { readonly column: 'updatedAt' };
               };
             };
+          };
+        };
+        readonly enum: {
+          readonly ItemStatus: {
+            readonly codecId: 'pg/text@1';
+            readonly members: readonly [
+              { readonly name: 'active'; readonly value: 'active' },
+              { readonly name: 'paused'; readonly value: 'paused' },
+              { readonly name: 'traded'; readonly value: 'traded' },
+            ];
           };
         };
       };

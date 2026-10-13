@@ -56,13 +56,15 @@ export default async function Home({ searchParams }: HomeProps) {
   let itemsDoBanco: any[] = [];
 
   try {
+    // Ofertas pausadas ou já trocadas não aparecem no catálogo
     itemsDoBanco =
       categoriaSelecionada === "Todos"
         ? await db.orm.public.Item
+            .where({ status: "active" })
             .orderBy((item: any) => item.createdAt.desc())
             .all()
         : await db.orm.public.Item
-            .where({ category: categoriaSelecionada })
+            .where({ category: categoriaSelecionada, status: "active" })
             .orderBy((item: any) => item.createdAt.desc())
             .all();
   } catch (error) {

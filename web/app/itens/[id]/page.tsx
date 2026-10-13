@@ -64,6 +64,13 @@ export default async function ItemDetailPage({ params }: ItemPageProps) {
     notFound();
   }
 
+  const disponivel = !item.status || item.status === "active";
+  const statusTexto = disponivel
+    ? "Disponível no catálogo"
+    : item.status === "paused"
+    ? "Anúncio pausado pelo dono"
+    : "Este item já foi trocado";
+
   return (
     <main className="min-h-screen bg-[#F8FBF9] text-[#1B281F] py-8 px-6">
       <div className="max-w-4xl mx-auto space-y-6">
@@ -104,7 +111,7 @@ export default async function ItemDetailPage({ params }: ItemPageProps) {
               <div className="flex items-center gap-3 text-xs text-[#718078]">
                 <span>📍 {item.city || "Osasco, SP"}</span>
                 <span>•</span>
-                <span>Disponível no catálogo</span>
+                <span>{statusTexto}</span>
               </div>
 
               <p className="text-sm text-gray-600 leading-relaxed">
@@ -122,9 +129,10 @@ export default async function ItemDetailPage({ params }: ItemPageProps) {
 
             <button
               type="button"
-              className="w-full py-3.5 bg-[#19E65E] hover:bg-[#26C9B9] text-[#1B281F] font-bold rounded-xl transition shadow-sm text-center"
+              disabled={!disponivel}
+              className="w-full py-3.5 bg-[#19E65E] hover:bg-[#26C9B9] text-[#1B281F] font-bold rounded-xl transition shadow-sm text-center disabled:cursor-not-allowed disabled:bg-[#E7EFEA] disabled:text-[#718078]"
             >
-              Tenho Interesse no Item
+              {disponivel ? "Tenho Interesse no Item" : statusTexto}
             </button>
           </div>
         </div>

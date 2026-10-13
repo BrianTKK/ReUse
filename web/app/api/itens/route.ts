@@ -6,7 +6,7 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const busca = searchParams.get("busca")?.trim().toLowerCase() || "";
 
-    const itens = await db.orm.public.Item.all();
+    const itens = await db.orm.public.Item.where({ status: "active" }).all();
 
     const resultados = itens.filter((item) => {
       if (!busca) return true;
