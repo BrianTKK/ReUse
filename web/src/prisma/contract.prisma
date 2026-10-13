@@ -1,5 +1,12 @@
 // use prisma-next
 
+enum ItemStatus {
+  @@type("pg/text@1")
+  active = "active"
+  paused = "paused"
+  traded = "traded"
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
@@ -17,6 +24,7 @@ model Item {
   condition   String
   image       String?
   city        String
+  status      ItemStatus @default(active)
   user        User?    @relation(fields: [userId], references: [id])
   userId      Int?
   createdAt   TimestamptzString @default(now())

@@ -1,5 +1,7 @@
 import { redirect } from "next/navigation";
 import { db } from "../../src/prisma/db";
+import { DEFAULT_CITY, imageForCategory } from "../../src/catalog";
+import { findOrCreateUser, parseEmail } from "../../src/users";
 
 async function criarItem(formData: FormData) {
   "use server";
@@ -8,29 +10,24 @@ async function criarItem(formData: FormData) {
   const category = String(formData.get("category") || "");
   const description = String(formData.get("description") || "");
   const condition = String(formData.get("condition") || "");
+  const email = parseEmail(formData.get("email"));
+  const name = String(formData.get("name") || "");
 
-  if (!title || !category || !description || !condition) {
+  if (!title || !category || !description || !condition || !email) {
     return;
   }
 
-  const imagensPorCategoria: Record<string, string> = {
-    Móveis: "/items/cadeira.jpg",
-    Plantas: "/items/planta.jpg",
-    Bicicletas: "/items/bicicleta.jpg",
-    Decoração: "/items/vaso.jpg",
-    Eletrônicos: "/items/monitor.jpg",
-  };
-
-  const image =
-    imagensPorCategoria[category] || "/items/cadeira.jpg";
+  // O e-mail liga o anúncio ao dono, para o assistente encontrar "meus anúncios"
+  const user = await findOrCreateUser(email, name);
 
   await db.orm.public.Item.create({
     title,
     category,
     description,
     condition,
-    city: "Osasco, SP",
-    image,
+    city: DEFAULT_CITY,
+    image: imageForCategory(category),
+    userId: user.id,
   });
 
   redirect("/");
@@ -86,6 +83,43 @@ export default function CriarAnuncio() {
           </div>
 
           <form action={criarItem} className="space-y-6">
+            <div className="grid gap-6 sm:grid-cols-2">
+              <div>
+                <label
+                  htmlFor="name"
+                  className="mb-2 block text-sm font-semibold"
+                >
+                  Seu nome
+                </label>
+
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  placeholder="Ex: Clara Sustento"
+                  className="w-full rounded-xl border border-[#DDE9E1] bg-white px-4 py-3 text-sm outline-none transition focus:border-[#19E65E]"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="email"
+                  className="mb-2 block text-sm font-semibold"
+                >
+                  Seu e-mail
+                </label>
+
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  placeholder="voce@email.com"
+                  className="w-full rounded-xl border border-[#DDE9E1] bg-white px-4 py-3 text-sm outline-none transition focus:border-[#19E65E]"
+                />
+              </div>
+            </div>
+
             <div>
               <label
                 htmlFor="title"

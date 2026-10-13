@@ -1,0 +1,40 @@
+# Produção: app em 127.0.0.1 (Nginx na frente com HTTPS) e banco sem porta publicada.
+# Variáveis em .env ao lado deste arquivo: POSTGRES_PASSWORD, ASSISTANT_API_KEY,
+# PUBLIC_BASE_URL e, depois de criar o web chat, WATSON_INTEGRATION_ID,
+# WATSON_REGION e WATSON_SERVICE_INSTANCE_ID.
+name: reuse
+
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://reuse:${POSTGRES_PASSWORD}@db:5432/reuse
+    ports:
+      - "127.0.0.1:${APP_PORT:-3020}:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    mem_limit: 512m
+    cpus: 1.0
+
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: reuse
+      POSTGRES_USER: reuse
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U reuse -d reuse"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    mem_limit: 256m
+    cpus: 0.5
+
+volumes:
+  db:
