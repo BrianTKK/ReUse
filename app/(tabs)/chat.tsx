@@ -4,9 +4,9 @@ import {
   Text,
   FlatList,
   StyleSheet,
-  ActivityIndicator,
-  SafeAreaView
+  ActivityIndicator
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type Chat = {
   id: number;
@@ -20,7 +20,7 @@ export default function Chat() {
   const [chats, setChats] = useState<Chat[]>([]);
   const [loading, setLoading] = useState(true);
 
-  async function carregarChats() {
+  async function carregarChats(): Promise<Chat[]> {
 
     try {
 
@@ -59,22 +59,22 @@ export default function Chat() {
         mensagem: mensagens[index]
       }));
 
-      setChats(chatsFormatados);
+      return chatsFormatados;
 
     } catch (error) {
 
       console.log(error);
 
-    } finally {
-
-      setLoading(false);
+      return [];
 
     }
   }
 
   useEffect(() => {
 
-    carregarChats();
+    carregarChats()
+      .then(setChats)
+      .finally(() => setLoading(false));
 
   }, []);
 
@@ -90,7 +90,7 @@ export default function Chat() {
 
   return (
 
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
 
       <Text style={styles.title}>
         Conversas

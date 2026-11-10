@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, TouchableOpacity, TextInput, SafeAreaView } from 'react-native';
+import { View, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { AntDesign, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Typography from '../../src/components/Typography/typography';
@@ -10,7 +11,7 @@ export default function NewListing() {
   const [status, setStatus] = useState('Novo');
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
           <AntDesign name="close" size={24} color={colors.textDark} />

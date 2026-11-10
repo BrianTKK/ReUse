@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Typography from '../Typography/typography';
 import { useRouter } from 'expo-router';

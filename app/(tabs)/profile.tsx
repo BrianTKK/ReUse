@@ -3,9 +3,9 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   TouchableOpacity
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
@@ -18,23 +18,14 @@ export default function Profile() {
   const [trocas, setTrocas] = useState(12);
   const [itens, setItens] = useState(4);
 
-  async function carregarPerfil() {
+  async function lerPerfil() {
     const savedName = await getUserSession();
-
-    if (savedName) {
-      setUserName(savedName);
-    }
-
     const perfilSalvo = await AsyncStorage.getItem('@reuse_perfil');
 
-    if (perfilSalvo) {
-      const perfil = JSON.parse(perfilSalvo);
-
-      setCidade(perfil.cidade);
-      setPontos(perfil.pontos);
-      setTrocas(perfil.trocas);
-      setItens(perfil.itens);
-    }
+    return {
+      savedName,
+      perfil: perfilSalvo ? JSON.parse(perfilSalvo) : null
+    };
   }
 
   async function salvarPerfil() {
@@ -54,11 +45,22 @@ export default function Profile() {
   }
 
   useEffect(() => {
-    carregarPerfil();
+    lerPerfil().then(({ savedName, perfil }) => {
+      if (savedName) {
+        setUserName(savedName);
+      }
+
+      if (perfil) {
+        setCidade(perfil.cidade);
+        setPontos(perfil.pontos);
+        setTrocas(perfil.trocas);
+        setItens(perfil.itens);
+      }
+    });
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
 
       <View style={styles.header}>
         <View style={styles.avatar}>

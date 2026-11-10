@@ -33,20 +33,23 @@ const onboardingData = [
   }
 ];
 
+const viewConfig = { viewAreaCoveragePercentThreshold: 50 };
+
 export default function OnboardingCarousel() {
   const router = useRouter();
   const { width, height } = useWindowDimensions(); // Sempre atualizado com tela
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
-  const scrollX = useRef(new Animated.Value(0)).current;
+  // useState com inicializador: valor estável entre renders, sem ler ref durante o render
+  // (regra do React Compiler; a FlatList também exige onViewableItemsChanged estável).
+  const [scrollX] = useState(() => new Animated.Value(0));
 
-  const viewableItemsChanged = useRef(({ viewableItems }: any) => {
-    if (viewableItems[0]) {
-      setCurrentIndex(viewableItems[0].index);
+  const [viewableItemsChanged] = useState(() => ({ viewableItems }: { viewableItems: { index?: number | null }[] }) => {
+    const index = viewableItems[0]?.index;
+    if (index != null) {
+      setCurrentIndex(index);
     }
-  }).current;
-
-  const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
+  });
 
   const scrollToNext = () => {
     if (currentIndex < onboardingData.length - 1) {
@@ -72,7 +75,8 @@ export default function OnboardingCarousel() {
           {item.imageSource ? (
             <Image
               source={item.imageSource}
-              style={{ width: '100%', height: '100%', resizeMode: 'contain' }}
+              resizeMode="contain"
+              style={{ width: '100%', height: '100%' }}
             />
           ) : (
             <Text style={{ color: '#aaa', fontWeight: 'bold' }}>{item.imagePlaceholder}</Text>
@@ -103,6 +107,7 @@ export default function OnboardingCarousel() {
           ref={flatListRef}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
+          getItemLayout={(_, index) => ({ length: width, offset: width * index, index })}
           horizontal
           showsHorizontalScrollIndicator={false}
           pagingEnabled
