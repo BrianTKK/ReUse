@@ -16,12 +16,12 @@ Projeto do 2º ano da FIAP, construído ao longo de seis fases.
 
 | Fase | Entrega | Onde está |
 |---|---|---|
-| 01 | Wireframes e protótipos web e mobile | Figma do grupo |
-| 02 | App mobile em React Native, animações e plano de gamificação | Raiz deste repositório (`app/`, `src/`) |
+| 01 | Wireframes e protótipos web e mobile | Fora deste repositório |
+| 02 | App mobile em React Native, animações e gamificação (pontos e EcoPoints) | Raiz deste repositório (`app/`, `src/`) |
 | 03 | Evolução do app mobile | Raiz deste repositório |
-| 04 | Plano de marketing digital | Documento do grupo |
-| 05 | Full stack: frontend Next.js e backend Node.js com Prisma e PostgreSQL | [`web/`](web) |
-| 06 | Chatbot no IBM watsonx e área administrativa low code | Chatbot em [`assistant/`](assistant) e nas rotas `web/app/api/assistant/` |
+| 04 | Plano de marketing digital | Fora deste repositório |
+| 05 | Modelagem de dados e full stack: frontend Next.js e backend Node.js com Prisma e PostgreSQL | [`web/`](web) |
+| 06 | Chatbot no IBM watsonx | [`assistant/`](assistant) e as rotas `web/app/api/assistant/` |
 
 ## 🏗️ Arquitetura
 
