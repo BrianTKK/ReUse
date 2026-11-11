@@ -61,6 +61,24 @@ export const REUSE_ITEMS: ReUseItem[] = [
   },
 ];
 
+// Chips de filtro da Home. Toda categoria usada nos itens precisa estar aqui.
+export const CATEGORIES = ['Móveis', 'Eletrônicos', 'Decoração', 'Esporte', 'Som', 'Outros'];
+
+// Compara sem diferenciar maiúsculas nem acentos ("movel" acha "Móveis").
+const normalize = (text: string) =>
+  text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+
+export function filterItems(category: string | null, query: string, sortByPoints: boolean): ReUseItem[] {
+  const search = normalize(query);
+  const result = REUSE_ITEMS.filter((item) => {
+    if (category && item.category !== category) return false;
+    if (!search) return true;
+    return matches(item.title, search) || matches(item.category, search);
+  });
+
+  return sortByPoints ? [...result].sort((a, b) => b.points - a.points) : result;
+}
+
 export function getItemById(id: string | undefined): ReUseItem | undefined {
   return REUSE_ITEMS.find((item) => item.id === id);
 }

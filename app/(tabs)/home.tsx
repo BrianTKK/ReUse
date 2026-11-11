@@ -9,7 +9,7 @@ import ItemCard from '../../src/components/Cards/ItemCard';
 import * as Typography from '../../src/components/Typography/typography';
 import SearchBar from '../../src/components/Inputs/SearchBar';
 import Banner from '../../src/components/Cards/Banner';
-import { REUSE_ITEMS } from '../../src/data/items';
+import { CATEGORIES, filterItems } from '../../src/data/items';
 import { colors } from '../../constants/theme';
 
 import LogoReUseText from '../../src/assets/images/ReUse.svg';
@@ -18,6 +18,10 @@ import ReUseLogo from '../../src/assets/images/ReUse_SVG.svg';
 export default function Home() {
   const [userName, setUserName] = useState('Usuário');
   const router = useRouter();
+  const [category, setCategory] = useState<string | null>(null); // null = todos
+  const [query, setQuery] = useState('');
+  const [sortByPoints, setSortByPoints] = useState(false);
+  const visibleItems = filterItems(category, query, sortByPoints);
 
   // Recupera o nome salvo no Login
   useEffect(() => {
@@ -30,7 +34,7 @@ export default function Home() {
 
   return (
 <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
-      
+
       <View style={styles.headerContainer}>
         <View style={styles.topRow}>
           <View style={styles.logoArea}>
@@ -45,7 +49,7 @@ export default function Home() {
               </View>
             </View>
           </View>
-          
+
           <TouchableOpacity style={styles.notificationBtn}>
             <Ionicons name="notifications-outline" size={24} color={colors.textDark} />
             <View style={styles.notificationDot} />
@@ -54,33 +58,59 @@ export default function Home() {
       </View>
 
       <FlatList
-        data={REUSE_ITEMS}
+        data={visibleItems}
+        keyboardShouldPersistTaps="handled"
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <ItemCard item={item} />}
-        
+
         numColumns={2}
-        columnWrapperStyle={styles.row} 
-        
+        columnWrapperStyle={styles.row}
+
         ListHeaderComponent={
           <View>
-            <SearchBar /> 
+            <SearchBar
+              value={query}
+              onChangeText={setQuery}
+              sortActive={sortByPoints}
+              onToggleSort={() => setSortByPoints((active) => !active)}
+            />
 
-            <ScrollView 
-              horizontal 
-              showsHorizontalScrollIndicator={false} 
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles.filterScroll}
             >
-              <TouchableOpacity style={[styles.chip, styles.chipActive]}>
-                <Typography.Body3 style={{ color: '#FFF', fontWeight: '700' }}>Osasco, SP</Typography.Body3>
+              <TouchableOpacity
+                style={[styles.chip, category === null ? styles.chipActive : styles.chipInactive]}
+                onPress={() => setCategory(null)}
+              >
+                <Typography.Body3 style={category === null ? styles.chipTextActive : styles.chipTextInactive}>Osasco, SP</Typography.Body3>
               </TouchableOpacity>
-              {['Móveis', 'Som', 'Decoração', 'Eletro', 'Outros'].map((cat, i) => (
-                <TouchableOpacity key={i} style={[styles.chip, styles.chipInactive]}>
-                  <Typography.Body3 style={styles.chipTextInactive}>{cat}</Typography.Body3>
+              {CATEGORIES.map((cat) => (
+                <TouchableOpacity
+                  key={cat}
+                  style={[styles.chip, category === cat ? styles.chipActive : styles.chipInactive]}
+                  onPress={() => setCategory(cat)}
+                >
+                  <Typography.Body3 style={category === cat ? styles.chipTextActive : styles.chipTextInactive}>{cat}</Typography.Body3>
                 </TouchableOpacity>
               ))}
             </ScrollView>
 
-            <Typography.H5 style={styles.sectionTitle}>Recentes</Typography.H5>
+            <Typography.H5 style={styles.sectionTitle}>
+              {sortByPoints ? 'Mais EcoPoints primeiro' : 'Recentes'}
+            </Typography.H5>
+          </View>
+        }
+
+        ListEmptyComponent={
+          <View style={styles.empty}>
+            <Ionicons name="search-outline" size={32} color="#9CA3AF" />
+            <Typography.Body3 style={styles.emptyText}>
+              {query.trim()
+                ? `Nenhum item encontrado para "${query.trim()}".`
+                : 'Nenhum item nesta categoria por enquanto.'}
+            </Typography.Body3>
           </View>
         }
 
@@ -129,8 +159,11 @@ const styles = StyleSheet.create({
   chip: { paddingHorizontal: 16, paddingVertical: 8, borderRadius: 100, justifyContent: 'center',alignItems: 'center'},
   chipActive: { backgroundColor: colors.primary },
   chipInactive: { backgroundColor: '#FFF', borderWidth: 1, borderColor: '#E5E7EB', borderRadius: 100 },
+  chipTextActive: { color: '#FFF', fontWeight: '700', fontSize: 14 },
   chipTextInactive: {
     color: '#6B7280', fontSize: 14 },
+  empty: { alignItems: 'center', paddingHorizontal: 24, paddingVertical: 32, gap: 8 },
+  emptyText: { color: '#6B7280', fontSize: 14, lineHeight: 20, textAlign: 'center' },
   sectionTitle: { paddingHorizontal: 24, marginBottom: 16, fontWeight: '700' },
   listContent: { paddingBottom: 100 },
   row: { justifyContent: 'space-between', paddingHorizontal: 24, marginBottom: 16 },
