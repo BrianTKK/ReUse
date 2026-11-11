@@ -68,6 +68,15 @@ export const CATEGORIES = ['Móveis', 'Eletrônicos', 'Decoração', 'Esporte', 
 const normalize = (text: string) =>
   text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
 
+// Acha o trecho digitado ou, com 4 letras ou mais, uma palavra que comece igual:
+// assim "movel" acha "Móveis" e "cadeiras" acha "Cadeira".
+const matches = (text: string, search: string) => {
+  const normalized = normalize(text);
+  if (normalized.includes(search)) return true;
+  if (search.length < 4) return false;
+  return normalized.split(/\s+/).some((word) => word.startsWith(search.slice(0, 4)));
+};
+
 export function filterItems(category: string | null, query: string, sortByPoints: boolean): ReUseItem[] {
   const search = normalize(query);
   const result = REUSE_ITEMS.filter((item) => {
