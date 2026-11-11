@@ -1,23 +1,27 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Image } from 'expo-image';
+import { useRouter } from 'expo-router';
 import * as Typography from '../Typography/typography';
 import { colors } from '../../../constants/theme';
-
-interface ReUseItem {
-  id: string;
-  title: string;
-  category: string;
-  points: number;
-  image: any;
-}
+import { ReUseItem } from '../../data/items';
 
 export default function ItemCard({ item }: { item: ReUseItem }) {
+  const router = useRouter();
+
   return (
-    <TouchableOpacity style={styles.card}>
-      <Image 
-        source={item.image} 
-        style={styles.image} 
-        resizeMode="cover" 
+    <TouchableOpacity
+      style={styles.card}
+      activeOpacity={0.8}
+      accessibilityRole="button"
+      accessibilityLabel={`Ver ${item.title}`}
+      onPress={() => router.push({ pathname: '/item/[id]', params: { id: item.id } })}
+    >
+      <Image
+        source={item.image}
+        style={styles.image}
+        contentFit="cover"
+        transition={200}
       />
 
       <View style={styles.info}>
@@ -42,6 +46,7 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: 120,
+    backgroundColor: '#E5E7EB',
   },
   info: {
     padding: 12,

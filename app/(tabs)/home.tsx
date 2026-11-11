@@ -9,17 +9,11 @@ import ItemCard from '../../src/components/Cards/ItemCard';
 import * as Typography from '../../src/components/Typography/typography';
 import SearchBar from '../../src/components/Inputs/SearchBar';
 import Banner from '../../src/components/Cards/Banner';
+import { REUSE_ITEMS } from '../../src/data/items';
 import { colors } from '../../constants/theme';
 
 import LogoReUseText from '../../src/assets/images/ReUse.svg';
 import ReUseLogo from '../../src/assets/images/ReUse_SVG.svg';
-
-const REUSE_ITEMS = [
-  { id: '1', title: 'Cadeira de Escritório', category: 'Móveis', points: 50, image: require('../../src/assets/images/chair.jpg') },
-  { id: '2', title: 'Monitor 24"', category: 'Eletrônicos', points: 120, image: require('../../src/assets/images/monitor.jpg') },
-  { id: '3', title: 'Kit de Vasos', category: 'Decoração', points: 30, image: require('../../src/assets/images/pots.jpg') },
-  { id: '4', title: 'Bicicleta', category: 'Esporte', points: 200, image: require('../../src/assets/images/bicycle.jpg') },
-];
 
 export default function Home() {
   const [userName, setUserName] = useState('Usuário');

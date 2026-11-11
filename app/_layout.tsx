@@ -17,6 +17,8 @@ export default function RootLayout() {
       <Stack.Screen name="login" />
       {/* grupo de abas */}
       <Stack.Screen name="(tabs)" options={{ animation: 'fade' }} />
+      {/* detalhe do item, aberto pelos cards da Home */}
+      <Stack.Screen name="item/[id]" />
     </Stack>
   );
 }
